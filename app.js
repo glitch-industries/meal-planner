@@ -17,14 +17,52 @@ var C = {
 
 // ─── State ────────────────────────────────────────────────────────────────────
 var state = {
-  view: "today",          // today | week | library | plan
+  view: "feedme",         // feedme | week | plan
   meals: [],              // loaded from meals.json
   modal: null,            // null | {type, data}
   selectedWeekDay: null,  // for week tab day detail
-  picker: null,           // null | { type: "breakfast"|"lunch"|"dinner", seed: N }
+  picker: null,           // null | { type: "no-cook"|"cook", seed: N }
   libraryFilter: null,    // null | "breakfast"|"lunch"|"dinner"|"snack"|"no-cook"|"crockpot"
   addingRepeatBuy: false, // show inline input in repeat buys
+  feedMeSeed: 0,          // shuffle seed for Feed Me suggestion
 };
+
+// ─── Habits config ────────────────────────────────────────────────────────────
+var BUILT_IN_HABITS = [
+  { key: "meds",         label: "Took my meds",   emoji: "💊", weekdayOnly: false },
+  { key: "packed_lunch", label: "Packed my lunch", emoji: "🥗", weekdayOnly: true  },
+  { key: "water",        label: "Drank water",     emoji: "💧", weekdayOnly: false },
+  { key: "veggie",       label: "Ate a vegetable", emoji: "🥦", weekdayOnly: false },
+  { key: "fruit",        label: "Ate fruit",       emoji: "🍎", weekdayOnly: false },
+];
+
+function getCustomHabits() {
+  var raw = localStorage.getItem("custom_habits");
+  return raw ? JSON.parse(raw) : [];
+}
+
+function saveCustomHabits(habits) {
+  localStorage.setItem("custom_habits", JSON.stringify(habits));
+}
+
+function getActiveHabits() {
+  var isWeekend = [0, 6].indexOf(new Date().getDay()) !== -1;
+  var builtIn = BUILT_IN_HABITS.filter(function(h) { return !h.weekdayOnly || !isWeekend; });
+  return builtIn.concat(getCustomHabits());
+}
+
+function getHabitStreak(key) {
+  var streak = 0;
+  var d = new Date();
+  d.setDate(d.getDate() - 1); // start from yesterday
+  for (var i = 0; i < 30; i++) {
+    var log = getDayLog(fmtDate(d));
+    if (!log.habits[key]) break;
+    streak++;
+    d.setDate(d.getDate() - 1);
+  }
+  return streak;
+}
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 function el(tag, attrs, children) {
@@ -141,10 +179,9 @@ function render() {
     paddingBottom: "calc(env(safe-area-inset-bottom, 16px) + 16px)",
   }});
 
-  if (state.view === "today")   scroll.appendChild(renderToday());
-  if (state.view === "week")    scroll.appendChild(renderWeek());
-  if (state.view === "library") scroll.appendChild(renderLibrary());
-  if (state.view === "plan")    scroll.appendChild(renderPlan());
+  if (state.view === "feedme") scroll.appendChild(renderFeedMe());
+  if (state.view === "week")   scroll.appendChild(renderWeek());
+  if (state.view === "plan")   scroll.appendChild(renderPlan());
 
   root.appendChild(sticky);
   root.appendChild(scroll);
@@ -156,7 +193,7 @@ function render() {
 
 // ─── Header ───────────────────────────────────────────────────────────────────
 function renderHeader() {
-  var titles = { today: "Today", week: "This Week", library: "My Meals", plan: "Plan Week" };
+  var titles = { feedme: "Feed Me", week: "This Week", plan: "Plan Week" };
   return el("div", { style: {
     background: C.surface,
     padding: "16px 20px 12px",
@@ -169,10 +206,9 @@ function renderHeader() {
 // ─── Tabs ─────────────────────────────────────────────────────────────────────
 function renderTabs() {
   var tabs = [
-    { id: "today",   icon: "☀️", label: "Today" },
-    { id: "week",    icon: "📅", label: "Week" },
-    { id: "library", icon: "🍽️", label: "Meals" },
-    { id: "plan",    icon: "🛒", label: "Plan" },
+    { id: "feedme", icon: "🍽️", label: "Feed Me" },
+    { id: "week",   icon: "📅", label: "This Week" },
+    { id: "plan",   icon: "🛒", label: "Plan" },
   ];
   return el("div", { style: {
     display: "flex",
@@ -203,58 +239,135 @@ function renderTabs() {
 }
 
 // ─── TODAY TAB ────────────────────────────────────────────────────────────────
-function renderToday() {
+function renderFeedMe() {
   var wrap = el("div", { style: { padding: "20px 16px" } });
   var plan = getWeekPlan();
   var log  = getDayLog(todayKey());
 
-  // Date label
+  // ── Greeting ────────────────────────────────────────────────────────────────
+  var hour = new Date().getHours();
+  var greeting = hour < 10 ? "Good morning ☀️" : hour < 15 ? "Hey there 👋" : hour < 20 ? "Good evening 🌙" : "Late night 🌙";
+  var mealTime = hour < 10 ? "breakfast" : hour < 15 ? "lunch" : "dinner";
   var now = new Date();
   var dayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
   var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-  wrap.appendChild(el("p", { style: { fontSize: "13px", color: C.textMuted, marginBottom: "20px" } },
-    dayNames[now.getDay()] + ", " + monthNames[now.getMonth()] + " " + now.getDate()
-  ));
 
-  // No plan yet
-  if (!plan.meal_pool.length) {
-    wrap.appendChild(renderEmptyState(
+  wrap.appendChild(el("div", { style: { marginBottom: "24px" } }, [
+    el("p", { style: { fontSize: "20px", fontWeight: "700", color: C.textPrimary, marginBottom: "2px" } }, greeting),
+    el("p", { style: { fontSize: "13px", color: C.textMuted } }, dayNames[now.getDay()] + ", " + monthNames[now.getMonth()] + " " + now.getDate()),
+  ]));
+
+  // ── Suggestion engine ────────────────────────────────────────────────────────
+  var mealTypeMap = { breakfast: ["breakfast"], lunch: ["lunch"], dinner: ["dinner", "lunch"] };
+  var wantedTypes = mealTypeMap[mealTime] || ["dinner"];
+
+  var pool = plan.meal_pool.filter(function(id) {
+    var m = getMealById(id);
+    if (!m) return false;
+    return wantedTypes.some(function(t) { return m.meal_types.indexOf(t) !== -1; });
+  });
+
+  // Fall back to full pool if nothing matches
+  if (!pool.length) pool = plan.meal_pool.filter(function(id) { return !!getMealById(id); });
+
+  var suggestionSection = el("div", { style: { marginBottom: "28px" } });
+
+  if (!pool.length) {
+    suggestionSection.appendChild(renderEmptyState(
       "No meals planned yet",
-      "Tap Plan to pick this week's meals and generate your shopping list.",
+      "Tap Plan to pick this week's meals.",
       "Plan my week →",
       function() { state.view = "plan"; render(); }
     ));
-    return wrap;
-  }
+  } else {
+    var shuffled = seededShuffle(pool, state.feedMeSeed);
+    var suggestedId = shuffled[0];
+    var suggested = getMealById(suggestedId);
 
-  // Meal pool chips
-  wrap.appendChild(el("p", { style: { fontSize: "13px", fontWeight: "600", color: C.textMuted, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: "12px" } }, "What did you eat today?"));
+    suggestionSection.appendChild(el("p", { style: { fontSize: "12px", color: C.textMuted, fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "10px" } },
+      "How about for " + mealTime + "?"
+    ));
 
-  var grid = el("div", { style: { display: "flex", flexDirection: "column", gap: "10px", marginBottom: "28px" } });
-
-  plan.meal_pool.forEach(function(mealId) {
-    var meal = getMealById(mealId);
-    if (!meal) return;
-    var logged = log.logged_meals.indexOf(mealId) !== -1;
-    grid.appendChild(renderMealChip(meal, logged, function() {
+    // Big suggestion card
+    var card = el("div", { style: {
+      background: C.brand, borderRadius: "16px", padding: "20px",
+      marginBottom: "10px", cursor: "pointer",
+    }, onClick: function() {
       var l = getDayLog(todayKey());
-      var idx = l.logged_meals.indexOf(mealId);
-      if (idx === -1) l.logged_meals.push(mealId);
+      if (!l.logged_meals) l.logged_meals = [];
+      var idx = l.logged_meals.indexOf(suggestedId);
+      if (idx === -1) l.logged_meals.push(suggestedId);
       else l.logged_meals.splice(idx, 1);
-      saveDayLog(l);
-      render();
-    }));
-  });
+      saveDayLog(l); render();
+    }});
 
-  wrap.appendChild(grid);
+    var isLogged = log.logged_meals.indexOf(suggestedId) !== -1;
+    card.appendChild(el("div", { style: { fontSize: "22px", fontWeight: "700", color: C.white, marginBottom: "6px" } }, suggested.name));
+    card.appendChild(el("div", { style: { fontSize: "13px", color: "rgba(255,255,255,0.75)" } },
+      suggested.meal_types.join(" · ") + (suggested.tags.indexOf("no-cook") !== -1 ? " · no cook" : "")
+    ));
+    card.appendChild(el("div", { style: {
+      marginTop: "14px", display: "flex", gap: "10px", alignItems: "center"
+    }}, [
+      el("div", { style: {
+        flex: "1", padding: "10px 14px", borderRadius: "10px",
+        background: isLogged ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.18)",
+        color: C.white, fontSize: "14px", fontWeight: "700", textAlign: "center",
+      }}, isLogged ? "✓ Logged" : "I ate this"),
+    ]));
+    suggestionSection.appendChild(card);
 
-  // Habits
-  wrap.appendChild(renderHabits(log));
-
-  // Weight prompt (weekly)
-  if (shouldShowWeightPrompt()) {
-    wrap.appendChild(renderWeightPrompt());
+    // Not feeling it + recipe row
+    var actRow = el("div", { style: { display: "flex", gap: "8px", marginBottom: "4px" } });
+    actRow.appendChild(el("button", {
+      style: {
+        flex: "1", padding: "10px", borderRadius: "10px",
+        border: "1.5px solid " + C.border, background: C.surface,
+        fontSize: "13px", fontWeight: "600", color: C.textMuted, cursor: "pointer",
+      },
+      onClick: function() { state.feedMeSeed = state.feedMeSeed + 1; render(); }
+    }, "↻ Not feeling it"));
+    if (suggested.recipe) {
+      actRow.appendChild(el("button", {
+        style: {
+          padding: "10px 14px", borderRadius: "10px",
+          border: "1.5px solid " + C.border, background: C.surface,
+          fontSize: "13px", fontWeight: "600", color: C.purple, cursor: "pointer",
+        },
+        onClick: function() { state.modal = { type: "recipe", data: suggested }; render(); }
+      }, "Recipe ↗"));
+    }
+    suggestionSection.appendChild(actRow);
   }
+  wrap.appendChild(suggestionSection);
+
+  // ── Today's log ──────────────────────────────────────────────────────────────
+  var loggedMeals = (log.logged_meals || []).filter(function(id) { return !!getMealById(id); });
+  if (loggedMeals.length) {
+    wrap.appendChild(el("p", { style: { fontSize: "12px", fontWeight: "600", color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" } }, "Eaten today"));
+    var logCard = el("div", { style: { background: C.surface, border: "1.5px solid " + C.border, borderRadius: "12px", padding: "4px 14px", marginBottom: "24px" } });
+    loggedMeals.forEach(function(id, i) {
+      var meal = getMealById(id);
+      var row = el("div", {
+        style: { display: "flex", alignItems: "center", gap: "12px", padding: "10px 0", cursor: "pointer", borderBottom: i < loggedMeals.length - 1 ? "1px solid " + C.border : "none" },
+        onClick: function() {
+          var l = getDayLog(todayKey());
+          var idx = l.logged_meals.indexOf(id);
+          if (idx !== -1) l.logged_meals.splice(idx, 1);
+          saveDayLog(l); render();
+        }
+      }, [
+        el("div", { style: { width: "20px", height: "20px", borderRadius: "50%", background: C.brand, border: "2px solid " + C.brand, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", color: C.white, flexShrink: "0" } }, "✓"),
+        el("span", { style: { fontSize: "15px", color: C.textPrimary, flex: "1" } }, meal.name),
+        el("span", { style: { fontSize: "11px", color: C.textMuted } }, "tap to remove"),
+      ]);
+      logCard.appendChild(row);
+    });
+    wrap.appendChild(logCard);
+  }
+
+  // ── Habits ───────────────────────────────────────────────────────────────────
+  wrap.appendChild(renderHabitsSection(log));
 
   return wrap;
 }
@@ -312,43 +425,51 @@ function renderMealChip(meal, logged, onToggle) {
   return card;
 }
 
-function renderHabits(log) {
+function renderHabitsSection(log) {
+  var habits = getActiveHabits();
   var wrap = el("div", { style: { marginBottom: "24px" } });
-  wrap.appendChild(el("p", { style: { fontSize: "13px", fontWeight: "600", color: C.textMuted, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: "12px" } }, "Habits"));
 
-  var habits = [
-    { key: "ate_veggie",   icon: "🍆", label: "Ate a vegetable", activeColor: C.purple, activeBg: C.purpleLight },
-    { key: "drank_water",  icon: "💧", label: "Had a glass of water", activeColor: C.accent2, activeBg: "#fce8e0" },
-  ];
+  // Header row with edit button
+  wrap.appendChild(el("div", { style: { display: "flex", alignItems: "center", marginBottom: "10px" } }, [
+    el("p", { style: { fontSize: "12px", fontWeight: "600", color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", flex: "1", margin: "0" } }, "Habits"),
+    el("button", {
+      style: { background: "none", border: "none", fontSize: "12px", color: C.purple, fontWeight: "600", cursor: "pointer", padding: "0" },
+      onClick: function() { state.modal = { type: "edit-habits" }; render(); }
+    }, "customize"),
+  ]));
 
-  habits.forEach(function(h) {
-    var active = log.habits[h.key];
+  var card = el("div", { style: { background: C.surface, border: "1.5px solid " + C.border, borderRadius: "12px", padding: "4px 14px" } });
+
+  habits.forEach(function(h, i) {
+    var active = !!(log.habits && log.habits[h.key]);
+    var streak = getHabitStreak(h.key);
     var row = el("div", {
       style: {
-        display: "flex", alignItems: "center", gap: "12px",
-        background: active ? h.activeBg : C.surface,
-        border: "1.5px solid " + (active ? h.activeColor : C.border),
-        borderRadius: "12px", padding: "12px 16px", marginBottom: "8px",
-        cursor: "pointer", transition: "all 0.15s",
+        display: "flex", alignItems: "center", gap: "12px", padding: "12px 0",
+        cursor: "pointer", borderBottom: i < habits.length - 1 ? "1px solid " + C.border : "none",
       },
       onClick: function() {
         var l = getDayLog(todayKey());
+        if (!l.habits) l.habits = {};
         l.habits[h.key] = !l.habits[h.key];
-        saveDayLog(l);
-        render();
+        saveDayLog(l); render();
       }
     }, [
-      el("span", { style: { fontSize: "20px" } }, h.icon),
-      el("span", { style: { fontSize: "15px", fontWeight: "500", color: active ? h.activeColor : C.textPrimary } }, h.label),
-      el("div", { style: { marginLeft: "auto", width: "20px", height: "20px", borderRadius: "50%",
-        background: active ? h.activeColor : "transparent", border: "2px solid " + (active ? h.activeColor : C.border),
-        display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px",
-        color: C.white,
+      el("span", { style: { fontSize: "18px", width: "24px", textAlign: "center", flexShrink: "0" } }, h.emoji),
+      el("span", { style: { fontSize: "15px", color: active ? C.textPrimary : C.textPrimary, flex: "1" } }, h.label),
+      streak > 1 ? el("span", { style: { fontSize: "11px", color: C.purple, fontWeight: "600" } }, streak + "🔥") : null,
+      el("div", { style: {
+        width: "22px", height: "22px", borderRadius: "50%", flexShrink: "0",
+        background: active ? C.purple : "transparent",
+        border: "2px solid " + (active ? C.purple : C.border),
+        display: "flex", alignItems: "center", justifyContent: "center",
+        fontSize: "12px", color: C.white,
       }}, active ? "✓" : ""),
     ]);
-    wrap.appendChild(row);
+    card.appendChild(row);
   });
 
+  wrap.appendChild(card);
   return wrap;
 }
 
@@ -393,43 +514,114 @@ function renderWeek() {
   var days = getWeekDays();
   var todayStr = todayKey();
   var plan = getWeekPlan();
+  var dayOfWeek = new Date().getDay(); // 0=Sun
 
-  // Day strip
+  // ── What's available this week ───────────────────────────────────────────────
+  if (plan.meal_pool.length) {
+    function isMealNoCookW(m) {
+      return m.tags.indexOf("no-cook") !== -1 ||
+             (m.tags.indexOf("freezer") !== -1 && m.tags.indexOf("crockpot") === -1);
+    }
+    function isSnackOnlyW(m) {
+      return m.meal_types.indexOf("snack") !== -1 &&
+             m.meal_types.indexOf("dinner") === -1 &&
+             m.meal_types.indexOf("lunch") === -1;
+    }
+
+    var readyMeals = plan.meal_pool.filter(function(id) {
+      var m = getMealById(id); return m && (isMealNoCookW(m) || isSnackOnlyW(m));
+    });
+    var cookMeals = plan.meal_pool.filter(function(id) {
+      var m = getMealById(id); return m && !isMealNoCookW(m) && !isSnackOnlyW(m);
+    });
+
+    // Cooking nudge: mid-week + uncooked cook meals
+    var isMidWeek = dayOfWeek >= 3; // Wed+
+    var uncookedCookMeals = cookMeals.filter(function(id) {
+      return !days.some(function(d) {
+        return getDayLog(fmtDate(d)).logged_meals.indexOf(id) !== -1;
+      });
+    });
+    if (isMidWeek && uncookedCookMeals.length) {
+      var nudge = el("div", { style: {
+        background: C.purpleLight, border: "1.5px solid " + C.purple,
+        borderRadius: "12px", padding: "12px 14px", marginBottom: "20px",
+      }});
+      nudge.appendChild(el("p", { style: { fontSize: "13px", fontWeight: "700", color: C.purple, marginBottom: "4px" } }, "🍳 Good night to cook?"));
+      nudge.appendChild(el("p", { style: { fontSize: "12px", color: C.textMuted, marginBottom: "8px" } }, "You haven't made these yet this week:"));
+      uncookedCookMeals.forEach(function(id) {
+        var m = getMealById(id);
+        var row = el("div", { style: { display: "flex", alignItems: "center", gap: "8px", marginBottom: "4px" } }, [
+          el("span", { style: { fontSize: "14px", color: C.textPrimary, flex: "1" } }, m.name),
+        ]);
+        if (m.recipe) {
+          row.appendChild(el("button", {
+            style: { background: "none", border: "none", fontSize: "12px", color: C.purple, fontWeight: "700", cursor: "pointer", padding: "0" },
+            onClick: function() { state.modal = { type: "recipe", data: m }; render(); }
+          }, "recipe ↗"));
+        }
+        nudge.appendChild(row);
+      });
+      wrap.appendChild(nudge);
+    }
+
+    if (readyMeals.length) {
+      wrap.appendChild(el("p", { style: { fontSize: "12px", fontWeight: "600", color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" } }, "Ready to grab"));
+      var readyCard = el("div", { style: { background: C.surface, border: "1.5px solid " + C.border, borderRadius: "12px", padding: "4px 14px", marginBottom: "20px" } });
+      readyMeals.forEach(function(id, i) {
+        var m = getMealById(id);
+        readyCard.appendChild(el("div", { style: { padding: "10px 0", borderBottom: i < readyMeals.length - 1 ? "1px solid " + C.border : "none", fontSize: "15px", color: C.textPrimary } }, m.name));
+      });
+      wrap.appendChild(readyCard);
+    }
+
+    if (cookMeals.length) {
+      wrap.appendChild(el("p", { style: { fontSize: "12px", fontWeight: "600", color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" } }, "Could cook"));
+      var cookCard = el("div", { style: { background: C.surface, border: "1.5px solid " + C.border, borderRadius: "12px", padding: "4px 14px", marginBottom: "20px" } });
+      cookMeals.forEach(function(id, i) {
+        var m = getMealById(id);
+        var row = el("div", { style: { display: "flex", alignItems: "center", gap: "8px", padding: "10px 0", borderBottom: i < cookMeals.length - 1 ? "1px solid " + C.border : "none" } }, [
+          el("span", { style: { fontSize: "15px", color: C.textPrimary, flex: "1" } }, m.name),
+        ]);
+        if (m.recipe) {
+          row.appendChild(el("button", {
+            style: { background: "none", border: "none", fontSize: "12px", color: C.purple, fontWeight: "700", cursor: "pointer", padding: "0" },
+            onClick: function() { state.modal = { type: "recipe", data: m }; render(); }
+          }, "recipe ↗"));
+        }
+        cookCard.appendChild(row);
+      });
+      wrap.appendChild(cookCard);
+    }
+
+    wrap.appendChild(el("div", { style: { height: "1px", background: C.border, margin: "4px 0 20px" } }));
+  }
+
+  // ── Day strip ────────────────────────────────────────────────────────────────
   var dayNames = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-  var strip = el("div", { style: { display: "flex", gap: "6px", marginBottom: "24px" } });
-
+  var strip = el("div", { style: { display: "flex", gap: "6px", marginBottom: "20px" } });
   days.forEach(function(d, i) {
     var dateStr = fmtDate(d);
     var isToday = dateStr === todayStr;
     var isSelected = state.selectedWeekDay === dateStr;
     var log = getDayLog(dateStr);
-    var hasMeals = log.logged_meals.length > 0;
-    var isFuture = d > new Date() && !isToday;
-
-    var dayBtn = el("div", {
+    var hasMeals = log.logged_meals && log.logged_meals.length > 0;
+    strip.appendChild(el("div", {
       style: {
         flex: "1", display: "flex", flexDirection: "column", alignItems: "center",
         gap: "4px", padding: "8px 4px", borderRadius: "12px", cursor: "pointer",
         background: isSelected ? C.brand : isToday ? C.chipInactive : "transparent",
-        transition: "background 0.15s",
       },
-      onClick: function() {
-        state.selectedWeekDay = isSelected ? null : dateStr;
-        render();
-      }
+      onClick: function() { state.selectedWeekDay = isSelected ? null : dateStr; render(); }
     }, [
       el("span", { style: { fontSize: "11px", color: isSelected ? "rgba(255,255,255,0.8)" : C.textMuted } }, dayNames[i]),
       el("span", { style: { fontSize: "17px", fontWeight: isToday ? "700" : "400", color: isSelected ? C.white : C.textPrimary } }, String(d.getDate())),
-      el("div", { style: {
-        width: "6px", height: "6px", borderRadius: "50%",
-        background: hasMeals ? (isSelected ? C.white : C.brand) : "transparent",
-      }}),
-    ]);
-    strip.appendChild(dayBtn);
+      el("div", { style: { width: "6px", height: "6px", borderRadius: "50%", background: hasMeals ? (isSelected ? C.white : C.brand) : "transparent" } }),
+    ]));
   });
   wrap.appendChild(strip);
 
-  // Day detail (if selected)
+  // ── Day detail ───────────────────────────────────────────────────────────────
   if (state.selectedWeekDay) {
     var selDate = state.selectedWeekDay;
     var selLog = getDayLog(selDate);
@@ -438,70 +630,78 @@ function renderWeek() {
     var fullDayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
     var monthNames2 = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
 
-    wrap.appendChild(el("p", { style: { fontSize: "14px", fontWeight: "600", color: C.textPrimary, marginBottom: "12px" } },
+    wrap.appendChild(el("p", { style: { fontSize: "14px", fontWeight: "700", color: C.textPrimary, marginBottom: "10px" } },
       fullDayNames[selD.getDay()] + ", " + monthNames2[selD.getMonth()] + " " + selD.getDate()
     ));
 
     if (isFutureDay) {
-      wrap.appendChild(el("p", { style: { fontSize: "14px", color: C.textMuted } }, "Future day — log meals as you go."));
+      wrap.appendChild(el("p", { style: { fontSize: "14px", color: C.textMuted, marginBottom: "20px" } }, "Future day — log meals as you go."));
     } else if (!plan.meal_pool.length) {
-      wrap.appendChild(el("p", { style: { fontSize: "14px", color: C.textMuted } }, "No meals planned this week yet."));
+      wrap.appendChild(el("p", { style: { fontSize: "14px", color: C.textMuted, marginBottom: "20px" } }, "No meals planned this week yet."));
     } else {
-      plan.meal_pool.forEach(function(mealId) {
-        var meal = getMealById(mealId);
-        if (!meal) return;
-        var logged = selLog.logged_meals.indexOf(mealId) !== -1;
-        wrap.appendChild(renderMealChip(meal, logged, function() {
-          var l = getDayLog(selDate);
-          var idx = l.logged_meals.indexOf(mealId);
-          if (idx === -1) l.logged_meals.push(mealId);
-          else l.logged_meals.splice(idx, 1);
-          saveDayLog(l);
-          render();
-        }));
-        wrap.lastChild.style.marginBottom = "10px";
+      // Slim meal rows
+      var dayCard = el("div", { style: { background: C.surface, border: "1.5px solid " + C.border, borderRadius: "12px", padding: "4px 14px", marginBottom: "12px" } });
+      plan.meal_pool.forEach(function(mealId, i) {
+        var meal = getMealById(mealId); if (!meal) return;
+        var logged = selLog.logged_meals && selLog.logged_meals.indexOf(mealId) !== -1;
+        var row = el("div", {
+          style: { display: "flex", alignItems: "center", gap: "12px", padding: "10px 0", cursor: "pointer", borderBottom: i < plan.meal_pool.length - 1 ? "1px solid " + C.border : "none" },
+          onClick: function() {
+            var l = getDayLog(selDate); if (!l.logged_meals) l.logged_meals = [];
+            var idx = l.logged_meals.indexOf(mealId);
+            if (idx === -1) l.logged_meals.push(mealId); else l.logged_meals.splice(idx, 1);
+            saveDayLog(l); render();
+          }
+        }, [
+          el("div", { style: { width: "20px", height: "20px", borderRadius: "50%", flexShrink: "0", background: logged ? C.brand : "transparent", border: "2px solid " + (logged ? C.brand : C.border), display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", color: C.white } }, logged ? "✓" : ""),
+          el("span", { style: { fontSize: "15px", color: C.textPrimary, textDecoration: logged ? "line-through" : "none", opacity: logged ? "0.6" : "1" } }, meal.name),
+        ]);
+        dayCard.appendChild(row);
       });
+      wrap.appendChild(dayCard);
 
-      // Habits for that day
-      wrap.appendChild(el("div", { style: { marginTop: "16px" } }, [renderHabitsForDate(selLog, selDate)]));
+      // Habits for the day (slim)
+      var habits = getActiveHabits();
+      var habitCard = el("div", { style: { background: C.surface, border: "1.5px solid " + C.border, borderRadius: "12px", padding: "4px 14px", marginBottom: "20px" } });
+      wrap.appendChild(el("p", { style: { fontSize: "12px", fontWeight: "600", color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" } }, "Habits"));
+      habits.forEach(function(h, i) {
+        var active = !!(selLog.habits && selLog.habits[h.key]);
+        var row = el("div", {
+          style: { display: "flex", alignItems: "center", gap: "12px", padding: "10px 0", cursor: "pointer", borderBottom: i < habits.length - 1 ? "1px solid " + C.border : "none" },
+          onClick: function() {
+            var l = getDayLog(selDate); if (!l.habits) l.habits = {};
+            l.habits[h.key] = !l.habits[h.key]; saveDayLog(l); render();
+          }
+        }, [
+          el("span", { style: { fontSize: "16px", width: "22px", textAlign: "center", flexShrink: "0" } }, h.emoji),
+          el("span", { style: { fontSize: "14px", color: C.textPrimary, flex: "1" } }, h.label),
+          el("div", { style: { width: "20px", height: "20px", borderRadius: "50%", flexShrink: "0", background: active ? C.purple : "transparent", border: "2px solid " + (active ? C.purple : C.border), display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", color: C.white } }, active ? "✓" : ""),
+        ]);
+        habitCard.appendChild(row);
+      });
+      wrap.appendChild(habitCard);
     }
-
-    wrap.appendChild(el("div", { style: { height: "1px", background: C.border, margin: "20px 0" } }));
+    wrap.appendChild(el("div", { style: { height: "1px", background: C.border, margin: "4px 0 20px" } }));
   }
 
-  // Week summary
-  wrap.appendChild(el("p", { style: { fontSize: "13px", fontWeight: "600", color: C.textMuted, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: "12px" } }, "This Week's Meals"));
-
+  // ── Week summary dots ────────────────────────────────────────────────────────
   if (!plan.meal_pool.length) {
     wrap.appendChild(renderEmptyState("No meals planned", "Tap Plan to pick this week's meals.", "Plan my week →", function() { state.view = "plan"; render(); }));
     return wrap;
   }
 
+  wrap.appendChild(el("p", { style: { fontSize: "12px", fontWeight: "600", color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "10px" } }, "This week"));
   plan.meal_pool.forEach(function(mealId) {
-    var meal = getMealById(mealId);
-    if (!meal) return;
-
-    // Count how many days this was logged
-    var dotRow = el("div", { style: { display: "flex", gap: "5px", marginTop: "6px" } });
-    var count = 0;
+    var meal = getMealById(mealId); if (!meal) return;
+    var dotRow = el("div", { style: { display: "flex", gap: "5px", marginTop: "5px" } });
     days.forEach(function(d) {
-      var l = getDayLog(fmtDate(d));
-      var had = l.logged_meals.indexOf(mealId) !== -1;
-      if (had) count++;
-      dotRow.appendChild(el("div", { style: {
-        width: "8px", height: "8px", borderRadius: "50%",
-        background: had ? C.brand : C.chipInactive,
-      }}));
+      var had = getDayLog(fmtDate(d)).logged_meals && getDayLog(fmtDate(d)).logged_meals.indexOf(mealId) !== -1;
+      dotRow.appendChild(el("div", { style: { width: "8px", height: "8px", borderRadius: "50%", background: had ? C.brand : C.chipInactive } }));
     });
-
-    var card = el("div", { style: {
-      background: C.surface, border: "1.5px solid " + C.border,
-      borderRadius: "12px", padding: "12px 14px", marginBottom: "10px",
-    }}, [
-      el("div", { style: { fontSize: "15px", fontWeight: "600", color: C.textPrimary } }, meal.name),
+    wrap.appendChild(el("div", { style: { background: C.surface, border: "1.5px solid " + C.border, borderRadius: "12px", padding: "10px 14px", marginBottom: "8px" } }, [
+      el("div", { style: { fontSize: "14px", fontWeight: "600", color: C.textPrimary } }, meal.name),
       dotRow,
-    ]);
-    wrap.appendChild(card);
+    ]));
   });
 
   return wrap;
@@ -1114,6 +1314,17 @@ function renderPlan() {
     wrap.appendChild(section);
   })();
 
+  // ── Browse all meals ──────────────────────────────────────────────────────
+  wrap.appendChild(el("button", {
+    style: {
+      width: "100%", padding: "12px", borderRadius: "12px",
+      border: "1.5px solid " + C.purple, background: "transparent", cursor: "pointer",
+      fontSize: "14px", fontWeight: "600", color: C.purple,
+      marginBottom: "12px",
+    },
+    onClick: function() { state.modal = { type: "library" }; render(); }
+  }, "Browse all meals →"));
+
   // ── Done planning button ───────────────────────────────────────────────────
   wrap.appendChild(el("button", {
     style: {
@@ -1213,6 +1424,8 @@ function renderModal() {
   if (state.modal.type === "recipe") renderRecipeModal(sheet, state.modal.data);
   if (state.modal.type === "meal-detail") renderMealDetailModal(sheet, state.modal.data);
   if (state.modal.type === "add-meal") renderAddMealModal(sheet);
+  if (state.modal.type === "edit-habits") renderEditHabitsModal(sheet);
+  if (state.modal.type === "library") renderLibraryModal(sheet);
 
   overlay.appendChild(sheet);
   return overlay;
@@ -1353,6 +1566,119 @@ function renderAddMealModal(sheet) {
   sheet.appendChild(notesInput);
   sheet.appendChild(shopInput);
   sheet.appendChild(saveBtn);
+}
+
+function renderEditHabitsModal(sheet) {
+  sheet.appendChild(el("h2", { style: { fontSize: "20px", fontWeight: "700", color: C.textPrimary, marginBottom: "4px" } }, "Customize Habits"));
+  sheet.appendChild(el("p", { style: { fontSize: "13px", color: C.textMuted, marginBottom: "16px" } }, "Your daily check-ins. Built-in habits can't be removed, but you can add your own."));
+  sheet.appendChild(el("div", { style: { height: "1px", background: C.border, marginBottom: "16px" } }));
+
+  // Built-ins (read-only)
+  sheet.appendChild(el("p", { style: { fontSize: "11px", fontWeight: "700", color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" } }, "Built-in"));
+  var builtInCard = el("div", { style: { background: C.chipInactive, borderRadius: "12px", padding: "4px 14px", marginBottom: "20px" } });
+  BUILT_IN_HABITS.forEach(function(h, i) {
+    builtInCard.appendChild(el("div", { style: { display: "flex", alignItems: "center", gap: "10px", padding: "10px 0", borderBottom: i < BUILT_IN_HABITS.length - 1 ? "1px solid " + C.border : "none" } }, [
+      el("span", { style: { fontSize: "16px", width: "22px", textAlign: "center" } }, h.emoji),
+      el("span", { style: { fontSize: "14px", color: C.textPrimary, flex: "1" } }, h.label),
+      h.weekdayOnly ? el("span", { style: { fontSize: "11px", color: C.textMuted, background: C.border, borderRadius: "6px", padding: "2px 6px" } }, "weekdays") : null,
+    ]));
+  });
+  sheet.appendChild(builtInCard);
+
+  // Custom habits
+  var customs = getCustomHabits();
+  sheet.appendChild(el("p", { style: { fontSize: "11px", fontWeight: "700", color: C.textMuted, textTransform: "uppercase", letterSpacing: "0.5px", marginBottom: "8px" } }, "Your habits"));
+
+  if (customs.length) {
+    var customCard = el("div", { style: { background: C.surface, border: "1.5px solid " + C.border, borderRadius: "12px", padding: "4px 14px", marginBottom: "16px" } });
+    customs.forEach(function(h, i) {
+      var row = el("div", { style: { display: "flex", alignItems: "center", gap: "10px", padding: "10px 0", borderBottom: i < customs.length - 1 ? "1px solid " + C.border : "none" } }, [
+        el("span", { style: { fontSize: "16px", width: "22px", textAlign: "center" } }, h.emoji || "✅"),
+        el("span", { style: { fontSize: "14px", color: C.textPrimary, flex: "1" } }, h.label),
+        el("button", {
+          style: { background: "none", border: "none", fontSize: "16px", cursor: "pointer", color: C.textMuted, padding: "0 4px" },
+          onClick: function() {
+            var updated = getCustomHabits().filter(function(x) { return x.key !== h.key; });
+            saveCustomHabits(updated);
+            render();
+          }
+        }, "✕"),
+      ]);
+      customCard.appendChild(row);
+    });
+    sheet.appendChild(customCard);
+  }
+
+  // Add new habit
+  var newLabelInput = el("input", { type: "text", placeholder: "Habit name", style: { width: "100%", padding: "10px 12px", borderRadius: "10px", border: "1.5px solid " + C.border, fontSize: "14px", marginBottom: "8px", boxSizing: "border-box", outline: "none", background: C.surface, color: C.textPrimary } });
+  var newEmojiInput = el("input", { type: "text", placeholder: "Emoji (optional)", style: { width: "100%", padding: "10px 12px", borderRadius: "10px", border: "1.5px solid " + C.border, fontSize: "14px", marginBottom: "10px", boxSizing: "border-box", outline: "none", background: C.surface, color: C.textPrimary } });
+  sheet.appendChild(newLabelInput);
+  sheet.appendChild(newEmojiInput);
+  sheet.appendChild(el("button", {
+    style: { width: "100%", padding: "12px", borderRadius: "10px", border: "none", background: C.purple, color: C.white, fontSize: "14px", fontWeight: "700", cursor: "pointer" },
+    onClick: function() {
+      var label = newLabelInput.value.trim();
+      if (!label) return;
+      var emoji = newEmojiInput.value.trim() || "✅";
+      var key = "custom_" + Date.now();
+      var updated = getCustomHabits();
+      updated.push({ key: key, label: label, emoji: emoji });
+      saveCustomHabits(updated);
+      newLabelInput.value = "";
+      newEmojiInput.value = "";
+      render();
+    }
+  }, "Add habit"));
+}
+
+function renderLibraryModal(sheet) {
+  sheet.appendChild(el("h2", { style: { fontSize: "20px", fontWeight: "700", color: C.textPrimary, marginBottom: "4px" } }, "All Meals"));
+
+  // Filter chips
+  var filters = ["All","Breakfast","Lunch","Dinner","Snack","No Cook","Crockpot"];
+  var chipRow = el("div", { style: { display: "flex", flexWrap: "wrap", gap: "6px", marginBottom: "16px" } });
+  filters.forEach(function(f) {
+    var active = (state.libraryFilter === null && f === "All") || state.libraryFilter === f;
+    chipRow.appendChild(el("button", {
+      style: { padding: "6px 14px", borderRadius: "20px", border: "none", cursor: "pointer", fontSize: "13px", fontWeight: "600", background: active ? C.purple : C.chipInactive, color: active ? C.white : C.textMuted },
+      onClick: function() { state.libraryFilter = f === "All" ? null : f; render(); }
+    }, f));
+  });
+  sheet.appendChild(chipRow);
+
+  // Filter meals
+  var meals = state.meals.slice();
+  if (state.libraryFilter) {
+    var lf = state.libraryFilter;
+    meals = meals.filter(function(m) {
+      if (lf === "No Cook") return m.tags.indexOf("no-cook") !== -1;
+      if (lf === "Crockpot") return m.tags.indexOf("crockpot") !== -1;
+      return m.meal_types.indexOf(lf.toLowerCase()) !== -1;
+    });
+  }
+
+  var plan = getWeekPlan();
+  meals.forEach(function(meal) {
+    var inPlan = plan.meal_pool.indexOf(meal.id) !== -1;
+    var card = el("div", {
+      style: { background: C.surface, border: "1.5px solid " + (inPlan ? C.purple : C.border), borderRadius: "12px", padding: "12px 14px", marginBottom: "10px", cursor: "pointer" },
+      onClick: function() {
+        var p = getWeekPlan();
+        var idx = p.meal_pool.indexOf(meal.id);
+        if (idx === -1) { p.meal_pool.push(meal.id); p.servings[meal.id] = getDefaultServings(meal.id); }
+        else p.meal_pool.splice(idx, 1);
+        saveWeekPlan(p);
+        render();
+      }
+    }, [
+      el("div", { style: { display: "flex", alignItems: "center", gap: "8px" } }, [
+        el("span", { style: { fontSize: "15px", fontWeight: "600", color: C.textPrimary, flex: "1" } }, meal.name),
+        el("div", { style: { width: "20px", height: "20px", borderRadius: "50%", flexShrink: "0", background: inPlan ? C.purple : "transparent", border: "2px solid " + (inPlan ? C.purple : C.border), display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px", color: C.white } }, inPlan ? "✓" : ""),
+      ]),
+      el("p", { style: { fontSize: "12px", color: C.textMuted, marginTop: "2px" } }, meal.meal_types.join(" · ")),
+    ]);
+    sheet.appendChild(card);
+  });
 }
 
 // ─── Empty state ──────────────────────────────────────────────────────────────

@@ -39,7 +39,8 @@
       "no-dishes",
       "quick",
       "veggie-friendly",
-      "favorite"
+      "favorite",
+      "protein-rich"
     ],
     "dishes": 0,
     "notes": "Great packed lunch — toss in a container, keep dressing on the side so it doesn't get soggy. Add spinach, cherry tomatoes, shredded cheese.",
@@ -93,7 +94,8 @@
     "tags": [
       "quick",
       "veggie-friendly",
-      "1-dish"
+      "1-dish",
+      "protein-rich"
     ],
     "dishes": 1,
     "notes": "Season however you feel — everything bagel seasoning, hot sauce, fresh herbs if you have them.",
@@ -172,7 +174,8 @@
     "tags": [
       "no-cook",
       "no-dishes",
-      "quick"
+      "quick",
+      "protein-rich"
     ],
     "dishes": 0,
     "notes": "Add granola, fruit, honey, or nut butter. Whatever sounds good.",
@@ -243,7 +246,8 @@
     ],
     "tags": [
       "1-dish",
-      "favorite"
+      "favorite",
+      "protein-rich"
     ],
     "dishes": 1,
     "notes": "Pre-cooked shredded chicken makes this stupidly easy. White cheese melts better than yellow. Don't skimp on the sour cream.",
@@ -285,7 +289,8 @@
       "dinner"
     ],
     "tags": [
-      "1-dish"
+      "1-dish",
+      "protein-rich"
     ],
     "dishes": 1,
     "notes": "Keep toppings simple — shredded cheese, sour cream, salsa. Corn tortillas hold up better if you warm them in the pan first.",
@@ -373,7 +378,8 @@
       "dinner"
     ],
     "tags": [
-      "1-dish"
+      "1-dish",
+      "protein-rich"
     ],
     "dishes": 1,
     "notes": "Good packed lunch — travels well in a container, microwave at work or eat at room temp. Bottled teriyaki sauce is completely fine.",
@@ -446,7 +452,8 @@
     ],
     "tags": [
       "quick",
-      "1-dish"
+      "1-dish",
+      "protein-rich"
     ],
     "dishes": 1,
     "notes": "Instant ramen is the base — the egg and veg make it an actual meal. Baby spinach wilts right in.",
@@ -485,7 +492,8 @@
       "veggie-friendly",
       "air-fryer",
       "1-dish",
-      "favorite"
+      "favorite",
+      "protein-rich"
     ],
     "dishes": 1,
     "notes": "Packs great for lunch — tofu and peanut sauce are good at room temp. Keep sauce separate if you're packing it ahead. Press the tofu first so it gets crispy.",
@@ -535,7 +543,8 @@
       "veggie-friendly",
       "no-cook",
       "no-dishes",
-      "favorite"
+      "favorite",
+      "protein-rich"
     ],
     "dishes": 0,
     "notes": "Perfect packed lunch — assemble in a container the night before, dressing on the side. Grain + protein + veg + sauce. No rules.",
@@ -573,7 +582,8 @@
     "tags": [
       "veggie-friendly",
       "1-dish",
-      "favorite"
+      "favorite",
+      "protein-rich"
     ],
     "dishes": 1,
     "notes": "Fancy-sounding, stupidly easy. Canned crushed tomatoes do all the work. Feta on top is not optional. Pita for dipping.",
@@ -660,7 +670,8 @@
       "dinner"
     ],
     "tags": [
-      "1-dish"
+      "1-dish",
+      "protein-rich"
     ],
     "dishes": 1,
     "notes": "Good packed lunch — couscous is great at room temp or microwaved. Make a batch, pack in containers for the week. Lemon and cumin make ground beef taste nothing like taco night.",
@@ -820,7 +831,8 @@
       "no-cook",
       "no-dishes",
       "quick",
-      "veggie-friendly"
+      "veggie-friendly",
+      "protein-rich"
     ],
     "dishes": 0,
     "notes": "Go savory: cucumber, cherry tomatoes, everything bagel seasoning, olive oil. Or sweet: honey, berries, granola. Both are great.",
@@ -1291,7 +1303,8 @@
       "no-cook",
       "no-dishes",
       "quick",
-      "favorite"
+      "favorite",
+      "protein-rich"
     ],
     "dishes": 0,
     "notes": "2-minute packed lunch. Roll tight and wrap in foil so it holds together in your bag. Eat at room temp — no microwave needed.",
@@ -1378,7 +1391,8 @@
       "no-dishes",
       "quick",
       "veggie-friendly",
-      "favorite"
+      "favorite",
+      "protein-rich"
     ],
     "dishes": 0,
     "notes": "Drink straight from the bullet cup — zero dishes. Frozen fruit means no ice needed. Add a handful of spinach if you have it; you won't taste it.",
@@ -1415,7 +1429,8 @@
       "no-cook",
       "no-dishes",
       "quick",
-      "veggie-friendly"
+      "veggie-friendly",
+      "protein-rich"
     ],
     "dishes": 0,
     "notes": "Sounds intimidating, tastes like a tropical fruit smoothie. The spinach disappears into the frozen mango. Good way to sneak in extra veggies without thinking about it.",
@@ -1456,7 +1471,8 @@
       "no-cook",
       "no-dishes",
       "quick",
-      "veggie-friendly"
+      "veggie-friendly",
+      "protein-rich"
     ],
     "dishes": 0,
     "notes": "Tastes like dessert. Freeze your ripe bananas so you never have to throw one out — just peel and freeze in a bag.",
@@ -1657,7 +1673,8 @@
     "tags": [
       "quick",
       "veggie-friendly",
-      "no-dishes"
+      "no-dishes",
+      "protein-rich"
     ],
     "dishes": 0,
     "notes": "Boil a batch of 6 on Sunday, keep in the fridge all week. Grab one whenever. Everything bagel seasoning makes them way better.",

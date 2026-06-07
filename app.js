@@ -29,11 +29,14 @@ var state = {
 
 // ─── Habits config ────────────────────────────────────────────────────────────
 var BUILT_IN_HABITS = [
-  { key: "meds",         label: "Took my meds",   emoji: "💊", weekdayOnly: false },
-  { key: "packed_lunch", label: "Packed my lunch", emoji: "🥗", weekdayOnly: true  },
-  { key: "water",        label: "Drank water",     emoji: "💧", weekdayOnly: false },
-  { key: "veggie",       label: "Ate a vegetable", emoji: "🥦", weekdayOnly: false },
-  { key: "fruit",        label: "Ate fruit",       emoji: "🍎", weekdayOnly: false },
+  { key: "meds",         label: "Took my meds",    emoji: "💊", weekdayOnly: false },
+  { key: "breakfast",    label: "Ate breakfast",    emoji: "🌅", weekdayOnly: false },
+  { key: "packed_lunch", label: "Packed my lunch",  emoji: "🥗", weekdayOnly: true  },
+  { key: "water",        label: "Drank water",      emoji: "💧", weekdayOnly: false },
+  { key: "veggie",       label: "Ate a vegetable",  emoji: "🥦", weekdayOnly: false },
+  { key: "fruit",        label: "Ate fruit",        emoji: "🍎", weekdayOnly: false },
+  { key: "outside",      label: "Got outside",      emoji: "🚶", weekdayOnly: false },
+  { key: "sleep",        label: "In bed on time",   emoji: "😴", weekdayOnly: false },
 ];
 
 function getCustomHabits() {
@@ -52,13 +55,19 @@ function getActiveHabits() {
 }
 
 function getHabitStreak(key) {
+  // Forgive one missed day — ADHD-friendly: a single gap doesn't reset the streak
   var streak = 0;
+  var missedAlready = false;
   var d = new Date();
   d.setDate(d.getDate() - 1); // start from yesterday
-  for (var i = 0; i < 30; i++) {
+  for (var i = 0; i < 60; i++) {
     var log = getDayLog(fmtDate(d));
-    if (!log.habits[key]) break;
-    streak++;
+    if (log.habits && log.habits[key]) {
+      streak++;
+    } else {
+      if (missedAlready) break; // two misses in a row = streak over
+      missedAlready = true;     // first miss: forgiven, keep counting
+    }
     d.setDate(d.getDate() - 1);
   }
   return streak;
@@ -258,6 +267,16 @@ function renderFeedMe() {
     el("p", { style: { fontSize: "13px", color: C.textMuted } }, dayNames[now.getDay()] + ", " + monthNames[now.getMonth()] + " " + now.getDate()),
   ]));
 
+  // ── Skipped-meal nudge: past 1pm with nothing logged ────────────────────────
+  var noMealsYet = !log.logged_meals || log.logged_meals.length === 0;
+  if (hour >= 13 && noMealsYet) {
+    wrap.appendChild(el("div", { style: {
+      background: C.purpleLight, border: "1.5px solid " + C.purple,
+      borderRadius: "12px", padding: "10px 14px", marginBottom: "20px",
+      fontSize: "13px", color: C.purple, fontWeight: "600",
+    }}, "⏰ Hey — you haven't logged anything today. Don't forget to eat!"));
+  }
+
   // ── Suggestion engine ────────────────────────────────────────────────────────
   var mealTypeMap = { breakfast: ["breakfast"], lunch: ["lunch"], dinner: ["dinner", "lunch"] };
   var wantedTypes = mealTypeMap[mealTime] || ["dinner"];
@@ -267,6 +286,15 @@ function renderFeedMe() {
     if (!m) return false;
     return wantedTypes.some(function(t) { return m.meal_types.indexOf(t) !== -1; });
   });
+
+  // In the morning, prefer protein-rich meals (better for ADHD focus)
+  if (mealTime === "breakfast") {
+    var proteinPool = pool.filter(function(id) {
+      var m = getMealById(id);
+      return m && m.tags && m.tags.indexOf("protein-rich") !== -1;
+    });
+    if (proteinPool.length) pool = proteinPool;
+  }
 
   // Fall back to full pool if nothing matches
   if (!pool.length) pool = plan.meal_pool.filter(function(id) { return !!getMealById(id); });

@@ -1,6 +1,6 @@
 {
-  "name": "Meal Planner",
-  "short_name": "Meals",
+  "name": "Roughly Chopped",
+  "short_name": "Roughly Chopped",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f5ede6",

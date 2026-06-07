@@ -2,47 +2,99 @@
   {
     "id": "eggo-pb",
     "name": "Eggos + Peanut Butter",
-    "meal_types": ["breakfast"],
-    "tags": ["no-cook", "no-dishes", "quick", "favorite"],
+    "meal_types": [
+      "breakfast"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "favorite"
+    ],
     "dishes": 0,
     "notes": "Add chocolate chips if you want a treat. Toast them a little longer for crispy edges.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Eggos (frozen waffles)", "section": "frozen" },
-      { "item": "Peanut butter", "section": "pantry" }
+      {
+        "item": "Eggos (frozen waffles)",
+        "section": "frozen",
+        "qty": 1,
+        "unit": "box"
+      },
+      {
+        "item": "Peanut butter",
+        "section": "pantry"
+      }
     ]
   },
   {
     "id": "salad-kit-chicken",
     "name": "Bag Salad Kit + Kevin's Chicken",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly", "favorite"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly",
+      "favorite"
+    ],
     "dishes": 0,
     "notes": "Great packed lunch — toss in a container, keep dressing on the side so it doesn't get soggy. Add spinach, cherry tomatoes, shredded cheese.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Bag salad kit", "section": "produce" },
-      { "item": "Kevin's pre-cooked chicken", "section": "refrigerated" },
-      { "item": "Shredded cheese", "section": "refrigerated" }
+      {
+        "item": "Bag salad kit",
+        "section": "produce"
+      },
+      {
+        "item": "Kevin's pre-cooked chicken",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Shredded cheese",
+        "section": "refrigerated"
+      }
     ]
   },
   {
     "id": "frozen-veggie-meal",
     "name": "Frozen Veggie Meal",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["freezer", "quick", "veggie-friendly", "1-dish"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "freezer",
+      "quick",
+      "veggie-friendly",
+      "1-dish"
+    ],
     "dishes": 1,
     "notes": "Annie's, Trader Joe's, whatever looks good. Grab 4–5 varieties so you have options.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Frozen veggie meals (grab 4–5 varieties)", "section": "frozen" }
+      {
+        "item": "Frozen veggie meals (grab 4–5 varieties)",
+        "section": "frozen",
+        "qty": 5,
+        "unit": "bags"
+      }
     ]
   },
   {
     "id": "scrambled-eggs-toast",
     "name": "Scrambled Eggs + Toast",
-    "meal_types": ["breakfast"],
-    "tags": ["quick", "veggie-friendly", "1-dish"],
+    "meal_types": [
+      "breakfast"
+    ],
+    "tags": [
+      "quick",
+      "veggie-friendly",
+      "1-dish"
+    ],
     "dishes": 1,
     "notes": "Season however you feel — everything bagel seasoning, hot sauce, fresh herbs if you have them.",
     "recipe": [
@@ -53,15 +105,30 @@
       "Toast your bread while the eggs rest. Season however you like."
     ],
     "shopping_items": [
-      { "item": "Eggs", "section": "refrigerated" },
-      { "item": "Bread", "section": "pantry" }
+      {
+        "item": "Eggs",
+        "section": "refrigerated",
+        "qty": 3,
+        "unit": "eggs"
+      },
+      {
+        "item": "Bread",
+        "section": "pantry"
+      }
     ]
   },
   {
     "id": "veggie-quesadilla",
     "name": "Veggie Quesadilla",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["quick", "veggie-friendly", "1-dish"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "quick",
+      "veggie-friendly",
+      "1-dish"
+    ],
     "dishes": 1,
     "notes": "Great way to use up random veggies. Frozen corn, canned black beans, cheese — whatever's around.",
     "recipe": [
@@ -73,31 +140,68 @@
       "Cut in half. Season with hot sauce, sour cream, salsa — whatever you have."
     ],
     "shopping_items": [
-      { "item": "Flour tortillas", "section": "pantry" },
-      { "item": "Shredded cheese", "section": "refrigerated" },
-      { "item": "Canned black beans", "section": "pantry" },
-      { "item": "Frozen corn", "section": "frozen" }
+      {
+        "item": "Flour tortillas",
+        "section": "pantry"
+      },
+      {
+        "item": "Shredded cheese",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Canned black beans",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "can"
+      },
+      {
+        "item": "Frozen corn",
+        "section": "frozen",
+        "qty": 1,
+        "unit": "bag"
+      }
     ]
   },
   {
     "id": "greek-yogurt-bowl",
     "name": "Greek Yogurt Bowl",
-    "meal_types": ["breakfast", "snack"],
-    "tags": ["no-cook", "no-dishes", "quick"],
+    "meal_types": [
+      "breakfast",
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick"
+    ],
     "dishes": 0,
     "notes": "Add granola, fruit, honey, or nut butter. Whatever sounds good.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Greek yogurt", "section": "refrigerated" },
-      { "item": "Granola", "section": "pantry" },
-      { "item": "Fresh fruit", "section": "produce" }
+      {
+        "item": "Greek yogurt",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Granola",
+        "section": "pantry"
+      },
+      {
+        "item": "Fresh fruit",
+        "section": "produce"
+      }
     ]
   },
   {
     "id": "pasta-jarred-sauce",
     "name": "Pasta + Jarred Sauce",
-    "meal_types": ["dinner"],
-    "tags": ["veggie-friendly", "2-dish"],
+    "meal_types": [
+      "dinner"
+    ],
+    "tags": [
+      "veggie-friendly",
+      "2-dish"
+    ],
     "dishes": 2,
     "notes": "Throw in frozen spinach or canned white beans for extra substance. Season the sauce with garlic powder, red pepper flakes, parmesan.",
     "recipe": [
@@ -109,17 +213,38 @@
       "Season with salt, red pepper flakes, parmesan if you have it."
     ],
     "shopping_items": [
-      { "item": "Pasta", "section": "pantry" },
-      { "item": "Jarred marinara sauce", "section": "pantry" },
-      { "item": "Frozen spinach", "section": "frozen" },
-      { "item": "Canned white beans", "section": "pantry" }
+      {
+        "item": "Pasta",
+        "section": "pantry"
+      },
+      {
+        "item": "Jarred marinara sauce",
+        "section": "pantry"
+      },
+      {
+        "item": "Frozen spinach",
+        "section": "frozen",
+        "qty": 1,
+        "unit": "bag"
+      },
+      {
+        "item": "Canned white beans",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "can"
+      }
     ]
   },
   {
     "id": "salsa-verde-enchiladas",
     "name": "Salsa Verde Chicken Enchiladas",
-    "meal_types": ["dinner"],
-    "tags": ["1-dish", "favorite"],
+    "meal_types": [
+      "dinner"
+    ],
+    "tags": [
+      "1-dish",
+      "favorite"
+    ],
     "dishes": 1,
     "notes": "Pre-cooked shredded chicken makes this stupidly easy. White cheese melts better than yellow. Don't skimp on the sour cream.",
     "recipe": [
@@ -131,18 +256,37 @@
       "Serve with extra sour cream."
     ],
     "shopping_items": [
-      { "item": "Kevin's pre-cooked chicken", "section": "refrigerated" },
-      { "item": "Flour tortillas", "section": "pantry" },
-      { "item": "Salsa verde (jarred)", "section": "pantry" },
-      { "item": "Sour cream", "section": "refrigerated" },
-      { "item": "White cheese (Monterey Jack or queso fresco)", "section": "refrigerated" }
+      {
+        "item": "Kevin's pre-cooked chicken",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Flour tortillas",
+        "section": "pantry"
+      },
+      {
+        "item": "Salsa verde (jarred)",
+        "section": "pantry"
+      },
+      {
+        "item": "Sour cream",
+        "section": "refrigerated"
+      },
+      {
+        "item": "White cheese (Monterey Jack or queso fresco)",
+        "section": "refrigerated"
+      }
     ]
   },
   {
     "id": "ground-beef-tacos",
     "name": "Ground Beef Tacos",
-    "meal_types": ["dinner"],
-    "tags": ["1-dish"],
+    "meal_types": [
+      "dinner"
+    ],
+    "tags": [
+      "1-dish"
+    ],
     "dishes": 1,
     "notes": "Keep toppings simple — shredded cheese, sour cream, salsa. Corn tortillas hold up better if you warm them in the pan first.",
     "recipe": [
@@ -153,18 +297,40 @@
       "Load them up: beef, cheese, sour cream, salsa, whatever else you have."
     ],
     "shopping_items": [
-      { "item": "Ground beef", "section": "refrigerated" },
-      { "item": "Flour tortillas", "section": "pantry" },
-      { "item": "Shredded cheese", "section": "refrigerated" },
-      { "item": "Sour cream", "section": "refrigerated" },
-      { "item": "Salsa roja (jarred)", "section": "pantry" }
+      {
+        "item": "Ground beef",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Flour tortillas",
+        "section": "pantry"
+      },
+      {
+        "item": "Shredded cheese",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Sour cream",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Salsa roja (jarred)",
+        "section": "pantry"
+      }
     ]
   },
   {
     "id": "air-fryer-nachos",
     "name": "Air Fryer Nachos",
-    "meal_types": ["dinner", "snack"],
-    "tags": ["quick", "no-dishes", "air-fryer"],
+    "meal_types": [
+      "dinner",
+      "snack"
+    ],
+    "tags": [
+      "quick",
+      "no-dishes",
+      "air-fryer"
+    ],
     "dishes": 0,
     "notes": "Use the air fryer basket lined with foil for easy cleanup. Canned jalapeños, black beans, whatever you have.",
     "recipe": [
@@ -175,18 +341,40 @@
       "Top with sour cream, salsa, avocado — whatever's around."
     ],
     "shopping_items": [
-      { "item": "Tortilla chips", "section": "pantry" },
-      { "item": "Shredded cheese", "section": "refrigerated" },
-      { "item": "Canned black beans", "section": "pantry" },
-      { "item": "Salsa roja (jarred)", "section": "pantry" },
-      { "item": "Sour cream", "section": "refrigerated" }
+      {
+        "item": "Tortilla chips",
+        "section": "pantry"
+      },
+      {
+        "item": "Shredded cheese",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Canned black beans",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "can"
+      },
+      {
+        "item": "Salsa roja (jarred)",
+        "section": "pantry"
+      },
+      {
+        "item": "Sour cream",
+        "section": "refrigerated"
+      }
     ]
   },
   {
     "id": "teriyaki-beef-bowl",
     "name": "Teriyaki Ground Beef Rice Bowl",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["1-dish"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "1-dish"
+    ],
     "dishes": 1,
     "notes": "Good packed lunch — travels well in a container, microwave at work or eat at room temp. Bottled teriyaki sauce is completely fine.",
     "recipe": [
@@ -197,16 +385,34 @@
       "Serve over rice. Add whatever toppings — frozen edamame, shredded carrots, a fried egg."
     ],
     "shopping_items": [
-      { "item": "Ground beef", "section": "refrigerated" },
-      { "item": "Teriyaki sauce (bottled)", "section": "pantry" },
-      { "item": "Microwave rice pouches", "section": "pantry" }
+      {
+        "item": "Ground beef",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Teriyaki sauce (bottled)",
+        "section": "pantry"
+      },
+      {
+        "item": "Microwave rice pouches",
+        "section": "pantry"
+      }
     ]
   },
   {
     "id": "air-fryer-gyoza",
     "name": "Air Fryer Gyoza / Dumplings",
-    "meal_types": ["lunch", "dinner", "snack"],
-    "tags": ["freezer", "quick", "air-fryer", "no-dishes"],
+    "meal_types": [
+      "lunch",
+      "dinner",
+      "snack"
+    ],
+    "tags": [
+      "freezer",
+      "quick",
+      "air-fryer",
+      "no-dishes"
+    ],
     "dishes": 0,
     "notes": "Frozen gyoza straight from the bag into the air fryer. Dipping sauce: soy sauce + a little rice vinegar + chili flakes.",
     "recipe": [
@@ -216,16 +422,32 @@
       "Mix dipping sauce: soy sauce + rice vinegar + chili flakes, or use store-bought."
     ],
     "shopping_items": [
-      { "item": "Frozen gyoza or dumplings", "section": "frozen" },
-      { "item": "Soy sauce", "section": "pantry" },
-      { "item": "Rice vinegar", "section": "pantry" }
+      {
+        "item": "Frozen gyoza or dumplings",
+        "section": "frozen",
+        "qty": 1,
+        "unit": "bag"
+      },
+      {
+        "item": "Soy sauce",
+        "section": "pantry"
+      },
+      {
+        "item": "Rice vinegar",
+        "section": "pantry"
+      }
     ]
   },
   {
     "id": "ramen-egg",
     "name": "Ramen + Soft Egg + Veggies",
-    "meal_types": ["dinner"],
-    "tags": ["quick", "1-dish"],
+    "meal_types": [
+      "dinner"
+    ],
+    "tags": [
+      "quick",
+      "1-dish"
+    ],
     "dishes": 1,
     "notes": "Instant ramen is the base — the egg and veg make it an actual meal. Baby spinach wilts right in.",
     "recipe": [
@@ -236,16 +458,35 @@
       "Top with the egg, a drizzle of sesame oil if you have it."
     ],
     "shopping_items": [
-      { "item": "Instant ramen (any variety)", "section": "pantry" },
-      { "item": "Eggs", "section": "refrigerated" },
-      { "item": "Baby spinach or frozen edamame", "section": "produce" }
+      {
+        "item": "Instant ramen (any variety)",
+        "section": "pantry"
+      },
+      {
+        "item": "Eggs",
+        "section": "refrigerated",
+        "qty": 2,
+        "unit": "eggs"
+      },
+      {
+        "item": "Baby spinach or frozen edamame",
+        "section": "produce"
+      }
     ]
   },
   {
     "id": "air-fryer-tofu-bowl",
     "name": "Air Fryer Tofu + Peanut Sauce Bowl",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["veggie-friendly", "air-fryer", "1-dish", "favorite"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "veggie-friendly",
+      "air-fryer",
+      "1-dish",
+      "favorite"
+    ],
     "dishes": 1,
     "notes": "Packs great for lunch — tofu and peanut sauce are good at room temp. Keep sauce separate if you're packing it ahead. Press the tofu first so it gets crispy.",
     "recipe": [
@@ -257,35 +498,83 @@
       "Assemble: rice, tofu, veggies, peanut sauce drizzled over everything."
     ],
     "shopping_items": [
-      { "item": "Extra firm tofu", "section": "refrigerated" },
-      { "item": "Peanut sauce (bottled) or peanut butter", "section": "pantry" },
-      { "item": "Microwave rice pouches", "section": "pantry" },
-      { "item": "Broccoli florets or edamame", "section": "produce" },
-      { "item": "Soy sauce", "section": "pantry" },
-      { "item": "Cornstarch", "section": "pantry" }
+      {
+        "item": "Extra firm tofu",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Peanut sauce (bottled) or peanut butter",
+        "section": "pantry"
+      },
+      {
+        "item": "Microwave rice pouches",
+        "section": "pantry"
+      },
+      {
+        "item": "Broccoli florets or edamame",
+        "section": "produce"
+      },
+      {
+        "item": "Soy sauce",
+        "section": "pantry"
+      },
+      {
+        "item": "Cornstarch",
+        "section": "pantry"
+      }
     ]
   },
   {
     "id": "buddha-bowl",
     "name": "Buddha Bowl",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["veggie-friendly", "no-cook", "no-dishes", "favorite"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "veggie-friendly",
+      "no-cook",
+      "no-dishes",
+      "favorite"
+    ],
     "dishes": 0,
     "notes": "Perfect packed lunch — assemble in a container the night before, dressing on the side. Grain + protein + veg + sauce. No rules.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Microwave rice pouches", "section": "pantry" },
-      { "item": "Pre-cooked chicken or canned chickpeas", "section": "refrigerated" },
-      { "item": "Shredded carrots, cucumber, or edamame", "section": "produce" },
-      { "item": "Tahini or miso ginger dressing", "section": "pantry" },
-      { "item": "Avocado (optional)", "section": "produce" }
+      {
+        "item": "Microwave rice pouches",
+        "section": "pantry"
+      },
+      {
+        "item": "Pre-cooked chicken or canned chickpeas",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Shredded carrots, cucumber, or edamame",
+        "section": "produce"
+      },
+      {
+        "item": "Tahini or miso ginger dressing",
+        "section": "pantry"
+      },
+      {
+        "item": "Avocado (optional)",
+        "section": "produce"
+      }
     ]
   },
   {
     "id": "shakshuka",
     "name": "Shakshuka",
-    "meal_types": ["breakfast", "dinner"],
-    "tags": ["veggie-friendly", "1-dish", "favorite"],
+    "meal_types": [
+      "breakfast",
+      "dinner"
+    ],
+    "tags": [
+      "veggie-friendly",
+      "1-dish",
+      "favorite"
+    ],
     "dishes": 1,
     "notes": "Fancy-sounding, stupidly easy. Canned crushed tomatoes do all the work. Feta on top is not optional. Pita for dipping.",
     "recipe": [
@@ -298,34 +587,81 @@
       "Top with crumbled feta, fresh herbs if you have them. Serve with pita."
     ],
     "shopping_items": [
-      { "item": "Canned crushed tomatoes", "section": "pantry" },
-      { "item": "Eggs", "section": "refrigerated" },
-      { "item": "Crumbled feta", "section": "refrigerated" },
-      { "item": "Pita bread", "section": "pantry" }
+      {
+        "item": "Canned crushed tomatoes",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "can"
+      },
+      {
+        "item": "Eggs",
+        "section": "refrigerated",
+        "qty": 4,
+        "unit": "eggs"
+      },
+      {
+        "item": "Crumbled feta",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Pita bread",
+        "section": "pantry"
+      }
     ]
   },
   {
     "id": "greek-salad-hummus",
     "name": "Greek Salad + Hummus + Pita",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["no-cook", "no-dishes", "veggie-friendly", "quick"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "veggie-friendly",
+      "quick"
+    ],
     "dishes": 0,
     "notes": "Great packed lunch — pack veggies, pita, and hummus in a container the night before. No heating needed. Cucumber, olives, cherry tomatoes, feta.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Cucumber", "section": "produce" },
-      { "item": "Cherry tomatoes", "section": "produce" },
-      { "item": "Kalamata olives", "section": "pantry" },
-      { "item": "Crumbled feta", "section": "refrigerated" },
-      { "item": "Hummus", "section": "refrigerated" },
-      { "item": "Pita bread", "section": "pantry" }
+      {
+        "item": "Cucumber",
+        "section": "produce"
+      },
+      {
+        "item": "Cherry tomatoes",
+        "section": "produce"
+      },
+      {
+        "item": "Kalamata olives",
+        "section": "pantry"
+      },
+      {
+        "item": "Crumbled feta",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Hummus",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Pita bread",
+        "section": "pantry"
+      }
     ]
   },
   {
     "id": "beef-couscous",
     "name": "Ground Beef + Couscous + Herbs",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["1-dish"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "1-dish"
+    ],
     "dishes": 1,
     "notes": "Good packed lunch — couscous is great at room temp or microwaved. Make a batch, pack in containers for the week. Lemon and cumin make ground beef taste nothing like taco night.",
     "recipe": [
@@ -336,17 +672,37 @@
       "Top with fresh parsley, crumbled feta, or whatever sounds good."
     ],
     "shopping_items": [
-      { "item": "Ground beef", "section": "refrigerated" },
-      { "item": "Couscous", "section": "pantry" },
-      { "item": "Crumbled feta", "section": "refrigerated" },
-      { "item": "Lemon", "section": "produce" }
+      {
+        "item": "Ground beef",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Couscous",
+        "section": "pantry"
+      },
+      {
+        "item": "Crumbled feta",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Lemon",
+        "section": "produce"
+      }
     ]
   },
   {
     "id": "air-fryer-falafel",
     "name": "Air Fryer Falafel + Pita",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["freezer", "air-fryer", "veggie-friendly", "quick"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "freezer",
+      "air-fryer",
+      "veggie-friendly",
+      "quick"
+    ],
     "dishes": 0,
     "notes": "Good packed lunch — falafel is totally fine at room temp. Air fry in the morning, pack with pita, hummus, and veggies. Microwave if you want it warm.",
     "recipe": [
@@ -355,17 +711,39 @@
       "Load up: falafel, hummus, cucumber, tomato, a drizzle of hot sauce or tzatziki."
     ],
     "shopping_items": [
-      { "item": "Frozen falafel", "section": "frozen" },
-      { "item": "Pita bread", "section": "pantry" },
-      { "item": "Hummus", "section": "refrigerated" },
-      { "item": "Cucumber", "section": "produce" }
+      {
+        "item": "Frozen falafel",
+        "section": "frozen",
+        "qty": 1,
+        "unit": "bag"
+      },
+      {
+        "item": "Pita bread",
+        "section": "pantry"
+      },
+      {
+        "item": "Hummus",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Cucumber",
+        "section": "produce"
+      }
     ]
   },
   {
     "id": "white-bean-tomato-soup",
     "name": "White Bean Tomato Soup (Crockpot)",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["crockpot", "veggie-friendly", "1-dish", "favorite"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "crockpot",
+      "veggie-friendly",
+      "1-dish",
+      "favorite"
+    ],
     "dishes": 1,
     "notes": "Dump everything in, walk away for 4–6 hours. Mash some beans against the side to thicken it. Crusty bread is essential.",
     "recipe": [
@@ -376,45 +754,101 @@
       "Stir in a handful of spinach at the end. Serve with bread."
     ],
     "shopping_items": [
-      { "item": "Canned white beans", "section": "pantry" },
-      { "item": "Canned crushed tomatoes", "section": "pantry" },
-      { "item": "Vegetable broth", "section": "pantry" },
-      { "item": "Baby spinach", "section": "produce" }
+      {
+        "item": "Canned white beans",
+        "section": "pantry",
+        "qty": 2,
+        "unit": "cans"
+      },
+      {
+        "item": "Canned crushed tomatoes",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "can"
+      },
+      {
+        "item": "Vegetable broth",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "carton"
+      },
+      {
+        "item": "Baby spinach",
+        "section": "produce"
+      }
     ]
   },
   {
     "id": "avocado-toast",
     "name": "Avocado Toast",
-    "meal_types": ["breakfast", "snack"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "meal_types": [
+      "breakfast",
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly"
+    ],
     "dishes": 0,
     "notes": "Everything bagel seasoning is the move. Add a fried egg or sliced cherry tomatoes if you want more substance.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Avocados", "section": "produce" },
-      { "item": "Bread", "section": "pantry" },
-      { "item": "Everything bagel seasoning", "section": "pantry" }
+      {
+        "item": "Avocados",
+        "section": "produce"
+      },
+      {
+        "item": "Bread",
+        "section": "pantry"
+      },
+      {
+        "item": "Everything bagel seasoning",
+        "section": "pantry"
+      }
     ]
   },
   {
     "id": "cottage-cheese-bowl",
     "name": "Cottage Cheese Bowl",
-    "meal_types": ["breakfast", "snack"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "meal_types": [
+      "breakfast",
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly"
+    ],
     "dishes": 0,
     "notes": "Go savory: cucumber, cherry tomatoes, everything bagel seasoning, olive oil. Or sweet: honey, berries, granola. Both are great.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Cottage cheese", "section": "refrigerated" },
-      { "item": "Cherry tomatoes or berries", "section": "produce" }
+      {
+        "item": "Cottage cheese",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Cherry tomatoes or berries",
+        "section": "produce"
+      }
     ]
   },
-
   {
     "id": "butternut-squash-soup",
     "name": "Butternut Squash Soup (Crockpot)",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["crockpot", "veggie-friendly", "1-dish", "favorite"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "crockpot",
+      "veggie-friendly",
+      "1-dish",
+      "favorite"
+    ],
     "dishes": 1,
     "notes": "Use pre-cut frozen squash to skip all the peeling and chopping. Blend it smooth with the immersion blender. Coconut milk makes it creamy and a little bit fancy.",
     "recipe": [
@@ -425,16 +859,38 @@
       "Top with a swirl of cream, pumpkin seeds, or crusty bread for dipping."
     ],
     "shopping_items": [
-      { "item": "Frozen butternut squash (cubed)", "section": "frozen" },
-      { "item": "Vegetable broth", "section": "pantry" },
-      { "item": "Coconut milk (canned)", "section": "pantry" }
+      {
+        "item": "Frozen butternut squash (cubed)",
+        "section": "frozen",
+        "qty": 1,
+        "unit": "bag"
+      },
+      {
+        "item": "Vegetable broth",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "carton"
+      },
+      {
+        "item": "Coconut milk (canned)",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "can"
+      }
     ]
   },
   {
     "id": "potato-leek-soup",
     "name": "Creamy Potato Soup (Crockpot)",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["crockpot", "veggie-friendly", "1-dish"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "crockpot",
+      "veggie-friendly",
+      "1-dish"
+    ],
     "dishes": 1,
     "notes": "Tastes like a lot of effort, requires almost none. Blend half of it and leave some chunks for texture. Top with shredded cheese and sour cream.",
     "recipe": [
@@ -446,17 +902,38 @@
       "Top with shredded cheese, chives or green onion, more sour cream."
     ],
     "shopping_items": [
-      { "item": "Yukon gold potatoes", "section": "produce" },
-      { "item": "Vegetable broth", "section": "pantry" },
-      { "item": "Sour cream", "section": "refrigerated" },
-      { "item": "Shredded cheese", "section": "refrigerated" }
+      {
+        "item": "Yukon gold potatoes",
+        "section": "produce"
+      },
+      {
+        "item": "Vegetable broth",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "carton"
+      },
+      {
+        "item": "Sour cream",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Shredded cheese",
+        "section": "refrigerated"
+      }
     ]
   },
   {
     "id": "red-lentil-soup",
     "name": "Red Lentil Soup (Crockpot)",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["crockpot", "veggie-friendly", "1-dish"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "crockpot",
+      "veggie-friendly",
+      "1-dish"
+    ],
     "dishes": 1,
     "notes": "Red lentils dissolve as they cook — no draining, no blending needed, but the immersion blender makes it extra silky if you want. Very filling, very cheap.",
     "recipe": [
@@ -467,66 +944,156 @@
       "Serve with pita or crusty bread."
     ],
     "shopping_items": [
-      { "item": "Red lentils", "section": "pantry" },
-      { "item": "Vegetable broth", "section": "pantry" },
-      { "item": "Canned diced tomatoes", "section": "pantry" },
-      { "item": "Lemon", "section": "produce" }
+      {
+        "item": "Red lentils",
+        "section": "pantry"
+      },
+      {
+        "item": "Vegetable broth",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "carton"
+      },
+      {
+        "item": "Canned diced tomatoes",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "can"
+      },
+      {
+        "item": "Lemon",
+        "section": "produce"
+      }
     ]
   },
-
   {
     "id": "snack-plate",
     "name": "Snack Plate",
-    "meal_types": ["lunch", "dinner", "snack"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly", "favorite"],
+    "meal_types": [
+      "lunch",
+      "dinner",
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly",
+      "favorite"
+    ],
     "dishes": 0,
     "notes": "This is a meal. Grab whatever's around and put it on a plate. The vibe is: something crunchy, something creamy, something fresh, something sweet. That's it.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Crackers", "section": "pantry" },
-      { "item": "Cheese (sliced or block)", "section": "refrigerated" },
-      { "item": "Grapes or apple", "section": "produce" },
-      { "item": "Deli turkey or hard boiled eggs", "section": "refrigerated" },
-      { "item": "Hummus or peanut butter for dipping", "section": "refrigerated" }
+      {
+        "item": "Crackers",
+        "section": "pantry"
+      },
+      {
+        "item": "Cheese (sliced or block)",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Grapes or apple",
+        "section": "produce"
+      },
+      {
+        "item": "Deli turkey or hard boiled eggs",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Hummus or peanut butter for dipping",
+        "section": "refrigerated"
+      }
     ]
   },
   {
     "id": "caprese-plate",
     "name": "Caprese + Bread",
-    "meal_types": ["lunch", "dinner", "snack"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "meal_types": [
+      "lunch",
+      "dinner",
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly"
+    ],
     "dishes": 0,
     "notes": "Fresh mozzarella, tomatoes, olive oil, salt. That's really it. A little balsamic glaze if you have it. Bread for soaking up the oil.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Fresh mozzarella", "section": "refrigerated" },
-      { "item": "Tomatoes or cherry tomatoes", "section": "produce" },
-      { "item": "Crusty bread or baguette", "section": "pantry" },
-      { "item": "Balsamic glaze (optional)", "section": "pantry" }
+      {
+        "item": "Fresh mozzarella",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Tomatoes or cherry tomatoes",
+        "section": "produce"
+      },
+      {
+        "item": "Crusty bread or baguette",
+        "section": "pantry"
+      },
+      {
+        "item": "Balsamic glaze (optional)",
+        "section": "pantry"
+      }
     ]
   },
   {
     "id": "bento-box",
     "name": "Bento Box",
-    "meal_types": ["lunch"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "meal_types": [
+      "lunch"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly"
+    ],
     "dishes": 0,
     "notes": "Literally just fill compartments. Leftovers, fresh veg, dip, fruit, crackers, cheese, hard boiled eggs — whatever fits. The point is variety with zero cooking.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Baby carrots or cucumber slices", "section": "produce" },
-      { "item": "Hummus or ranch dip", "section": "refrigerated" },
-      { "item": "Cheese cubes or string cheese", "section": "refrigerated" },
-      { "item": "Crackers", "section": "pantry" },
-      { "item": "Grapes, blueberries, or apple slices", "section": "produce" }
+      {
+        "item": "Baby carrots or cucumber slices",
+        "section": "produce"
+      },
+      {
+        "item": "Hummus or ranch dip",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Cheese cubes or string cheese",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Crackers",
+        "section": "pantry"
+      },
+      {
+        "item": "Grapes, blueberries, or apple slices",
+        "section": "produce"
+      }
     ]
   },
-
   {
     "id": "tomato-basil-soup",
     "name": "Tomato Basil Soup (Crockpot)",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["crockpot", "veggie-friendly", "1-dish", "favorite"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "crockpot",
+      "veggie-friendly",
+      "1-dish",
+      "favorite"
+    ],
     "dishes": 1,
     "notes": "Canned whole tomatoes make a better soup than crushed — they hold more flavor. Blend it completely smooth. Cream cheese at the end makes it incredibly silky. Grilled cheese is mandatory.",
     "recipe": [
@@ -538,16 +1105,36 @@
       "Taste and adjust salt. Serve with grilled cheese or crusty bread."
     ],
     "shopping_items": [
-      { "item": "Canned whole peeled tomatoes", "section": "pantry" },
-      { "item": "Vegetable broth", "section": "pantry" },
-      { "item": "Cream cheese", "section": "refrigerated" }
+      {
+        "item": "Canned whole peeled tomatoes",
+        "section": "pantry",
+        "qty": 2,
+        "unit": "cans"
+      },
+      {
+        "item": "Vegetable broth",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "carton"
+      },
+      {
+        "item": "Cream cheese",
+        "section": "refrigerated"
+      }
     ]
   },
   {
     "id": "black-bean-soup",
     "name": "Black Bean Soup (Crockpot)",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["crockpot", "veggie-friendly", "1-dish"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "crockpot",
+      "veggie-friendly",
+      "1-dish"
+    ],
     "dishes": 1,
     "notes": "Total pantry dump. Blend about half with the immersion blender so it's thick and creamy but still has some texture. Squeeze of lime at the end is not optional.",
     "recipe": [
@@ -559,18 +1146,46 @@
       "Top with sour cream, shredded cheese, hot sauce."
     ],
     "shopping_items": [
-      { "item": "Canned black beans", "section": "pantry" },
-      { "item": "Canned diced tomatoes", "section": "pantry" },
-      { "item": "Vegetable broth", "section": "pantry" },
-      { "item": "Lime", "section": "produce" },
-      { "item": "Sour cream", "section": "refrigerated" }
+      {
+        "item": "Canned black beans",
+        "section": "pantry",
+        "qty": 3,
+        "unit": "cans"
+      },
+      {
+        "item": "Canned diced tomatoes",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "can"
+      },
+      {
+        "item": "Vegetable broth",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "carton"
+      },
+      {
+        "item": "Lime",
+        "section": "produce"
+      },
+      {
+        "item": "Sour cream",
+        "section": "refrigerated"
+      }
     ]
   },
   {
     "id": "corn-chowder",
     "name": "Corn Chowder (Crockpot)",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["crockpot", "veggie-friendly", "1-dish"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "crockpot",
+      "veggie-friendly",
+      "1-dish"
+    ],
     "dishes": 1,
     "notes": "Frozen corn is perfect here — no thawing needed. The cream cheese at the end makes it thick and rich. Top with shredded cheese, chives, hot sauce.",
     "recipe": [
@@ -582,18 +1197,44 @@
       "Top with shredded cheddar, green onion, hot sauce."
     ],
     "shopping_items": [
-      { "item": "Frozen corn", "section": "frozen" },
-      { "item": "Potatoes", "section": "produce" },
-      { "item": "Vegetable broth", "section": "pantry" },
-      { "item": "Cream cheese", "section": "refrigerated" },
-      { "item": "Shredded cheese", "section": "refrigerated" }
+      {
+        "item": "Frozen corn",
+        "section": "frozen",
+        "qty": 1,
+        "unit": "bag"
+      },
+      {
+        "item": "Potatoes",
+        "section": "produce"
+      },
+      {
+        "item": "Vegetable broth",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "carton"
+      },
+      {
+        "item": "Cream cheese",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Shredded cheese",
+        "section": "refrigerated"
+      }
     ]
   },
   {
     "id": "minestrone",
     "name": "Minestrone (Crockpot)",
-    "meal_types": ["lunch", "dinner"],
-    "tags": ["crockpot", "veggie-friendly", "1-dish"],
+    "meal_types": [
+      "lunch",
+      "dinner"
+    ],
+    "tags": [
+      "crockpot",
+      "veggie-friendly",
+      "1-dish"
+    ],
     "dishes": 1,
     "notes": "Add the pasta in the last 30 min only — otherwise it gets mushy. Everything else is a total dump. Parmesan on top is the move.",
     "recipe": [
@@ -604,36 +1245,91 @@
       "Taste and adjust salt. Top with parmesan."
     ],
     "shopping_items": [
-      { "item": "Canned diced tomatoes", "section": "pantry" },
-      { "item": "Canned white beans", "section": "pantry" },
-      { "item": "Canned kidney beans", "section": "pantry" },
-      { "item": "Vegetable broth", "section": "pantry" },
-      { "item": "Small pasta (ditalini or elbows)", "section": "pantry" },
-      { "item": "Frozen spinach", "section": "frozen" }
+      {
+        "item": "Canned diced tomatoes",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "can"
+      },
+      {
+        "item": "Canned white beans",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "can"
+      },
+      {
+        "item": "Canned kidney beans",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "can"
+      },
+      {
+        "item": "Vegetable broth",
+        "section": "pantry",
+        "qty": 1,
+        "unit": "carton"
+      },
+      {
+        "item": "Small pasta (ditalini or elbows)",
+        "section": "pantry"
+      },
+      {
+        "item": "Frozen spinach",
+        "section": "frozen",
+        "qty": 1,
+        "unit": "bag"
+      }
     ]
   },
-
   {
     "id": "chicken-wrap",
     "name": "Chicken Wrap",
-    "meal_types": ["lunch"],
-    "tags": ["no-cook", "no-dishes", "quick", "favorite"],
+    "meal_types": [
+      "lunch"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "favorite"
+    ],
     "dishes": 0,
     "notes": "2-minute packed lunch. Roll tight and wrap in foil so it holds together in your bag. Eat at room temp — no microwave needed.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Flour tortillas", "section": "pantry" },
-      { "item": "Kevin's pre-cooked chicken", "section": "refrigerated" },
-      { "item": "Baby spinach or romaine", "section": "produce" },
-      { "item": "Shredded cheese", "section": "refrigerated" },
-      { "item": "Hummus, ranch, or sriracha mayo", "section": "refrigerated" }
+      {
+        "item": "Flour tortillas",
+        "section": "pantry"
+      },
+      {
+        "item": "Kevin's pre-cooked chicken",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Baby spinach or romaine",
+        "section": "produce"
+      },
+      {
+        "item": "Shredded cheese",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Hummus, ranch, or sriracha mayo",
+        "section": "refrigerated"
+      }
     ]
   },
   {
     "id": "cold-pasta-salad",
     "name": "Cold Pasta Salad",
-    "meal_types": ["lunch"],
-    "tags": ["veggie-friendly", "2-dish", "favorite"],
+    "meal_types": [
+      "lunch"
+    ],
+    "tags": [
+      "veggie-friendly",
+      "2-dish",
+      "favorite"
+    ],
     "dishes": 2,
     "notes": "Make a big batch on Sunday, pack in containers for the whole week. Gets better as it sits. Eat cold — no microwave needed.",
     "recipe": [
@@ -644,20 +1340,46 @@
       "Refrigerate. Keeps 4–5 days. Add a little more dressing before eating if it seems dry."
     ],
     "shopping_items": [
-      { "item": "Rotini or penne pasta", "section": "pantry" },
-      { "item": "Italian dressing (bottled)", "section": "pantry" },
-      { "item": "Cherry tomatoes", "section": "produce" },
-      { "item": "Kalamata olives", "section": "pantry" },
-      { "item": "Crumbled feta", "section": "refrigerated" },
-      { "item": "Cucumber", "section": "produce" }
+      {
+        "item": "Rotini or penne pasta",
+        "section": "pantry"
+      },
+      {
+        "item": "Italian dressing (bottled)",
+        "section": "pantry"
+      },
+      {
+        "item": "Cherry tomatoes",
+        "section": "produce"
+      },
+      {
+        "item": "Kalamata olives",
+        "section": "pantry"
+      },
+      {
+        "item": "Crumbled feta",
+        "section": "refrigerated"
+      },
+      {
+        "item": "Cucumber",
+        "section": "produce"
+      }
     ]
   },
-
   {
     "id": "protein-smoothie",
     "name": "Protein Smoothie",
-    "meal_types": ["breakfast", "snack"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly", "favorite"],
+    "meal_types": [
+      "breakfast",
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly",
+      "favorite"
+    ],
     "dishes": 0,
     "notes": "Drink straight from the bullet cup — zero dishes. Frozen fruit means no ice needed. Add a handful of spinach if you have it; you won't taste it.",
     "recipe": [
@@ -666,16 +1388,35 @@
       "Blend until smooth. Drink from the cup."
     ],
     "shopping_items": [
-      { "item": "Protein powder (Clean Eating)", "section": "pantry" },
-      { "item": "Frozen fruit mix (mango, berry, or tropical)", "section": "frozen" },
-      { "item": "Milk or oat milk", "section": "refrigerated" }
+      {
+        "item": "Protein powder (Clean Eating)",
+        "section": "pantry"
+      },
+      {
+        "item": "Frozen fruit mix (mango, berry, or tropical)",
+        "section": "frozen",
+        "qty": 1,
+        "unit": "bag"
+      },
+      {
+        "item": "Milk or oat milk",
+        "section": "refrigerated"
+      }
     ]
   },
   {
     "id": "green-smoothie",
     "name": "Green Smoothie",
-    "meal_types": ["breakfast", "snack"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "meal_types": [
+      "breakfast",
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly"
+    ],
     "dishes": 0,
     "notes": "Sounds intimidating, tastes like a tropical fruit smoothie. The spinach disappears into the frozen mango. Good way to sneak in extra veggies without thinking about it.",
     "recipe": [
@@ -684,17 +1425,39 @@
       "Drink from the cup."
     ],
     "shopping_items": [
-      { "item": "Protein powder (Clean Eating)", "section": "pantry" },
-      { "item": "Frozen mango or pineapple chunks", "section": "frozen" },
-      { "item": "Baby spinach", "section": "produce" },
-      { "item": "Milk or oat milk", "section": "refrigerated" }
+      {
+        "item": "Protein powder (Clean Eating)",
+        "section": "pantry"
+      },
+      {
+        "item": "Frozen mango or pineapple chunks",
+        "section": "frozen",
+        "qty": 1,
+        "unit": "bag"
+      },
+      {
+        "item": "Baby spinach",
+        "section": "produce"
+      },
+      {
+        "item": "Milk or oat milk",
+        "section": "refrigerated"
+      }
     ]
   },
   {
     "id": "pb-banana-smoothie",
     "name": "PB Banana Smoothie",
-    "meal_types": ["breakfast", "snack"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "meal_types": [
+      "breakfast",
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly"
+    ],
     "dishes": 0,
     "notes": "Tastes like dessert. Freeze your ripe bananas so you never have to throw one out — just peel and freeze in a bag.",
     "recipe": [
@@ -702,104 +1465,200 @@
       "Blend until smooth. Drink from the cup."
     ],
     "shopping_items": [
-      { "item": "Protein powder (Clean Eating)", "section": "pantry" },
-      { "item": "Bananas", "section": "produce" },
-      { "item": "Peanut butter", "section": "pantry" },
-      { "item": "Milk or oat milk", "section": "refrigerated" }
+      {
+        "item": "Protein powder (Clean Eating)",
+        "section": "pantry"
+      },
+      {
+        "item": "Bananas",
+        "section": "produce"
+      },
+      {
+        "item": "Peanut butter",
+        "section": "pantry"
+      },
+      {
+        "item": "Milk or oat milk",
+        "section": "refrigerated"
+      }
     ]
   },
-
   {
     "id": "cuties",
     "name": "Cuties / Clementines",
-    "meal_types": ["snack"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "meal_types": [
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly"
+    ],
     "dishes": 0,
     "notes": "Grab a bag and keep them out on the counter. The easier something is to grab, the more you actually eat it.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Cuties / clementines (bag)", "section": "produce" }
+      {
+        "item": "Cuties / clementines (bag)",
+        "section": "produce"
+      }
     ]
   },
   {
     "id": "banana-snack",
     "name": "Banana",
-    "meal_types": ["snack", "breakfast"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "meal_types": [
+      "snack",
+      "breakfast"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly"
+    ],
     "dishes": 0,
     "notes": "Keep a bunch on the counter. Freeze the ones going brown — they're perfect for smoothies.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Bananas", "section": "produce" }
+      {
+        "item": "Bananas",
+        "section": "produce"
+      }
     ]
   },
   {
     "id": "string-cheese",
     "name": "String Cheese",
-    "meal_types": ["snack"],
-    "tags": ["no-cook", "no-dishes", "quick"],
+    "meal_types": [
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick"
+    ],
     "dishes": 0,
     "notes": "Keep a pack in the fridge. Grab one when you need something fast.",
     "recipe": null,
     "shopping_items": [
-      { "item": "String cheese / cheese sticks", "section": "refrigerated" }
+      {
+        "item": "String cheese / cheese sticks",
+        "section": "refrigerated"
+      }
     ]
   },
   {
     "id": "crackers-pb",
     "name": "Crackers + Peanut Butter",
-    "meal_types": ["snack"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "meal_types": [
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly"
+    ],
     "dishes": 0,
     "notes": "Any cracker works. Add a few apple slices on the side if you have them.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Crackers", "section": "pantry" },
-      { "item": "Peanut butter", "section": "pantry" }
+      {
+        "item": "Crackers",
+        "section": "pantry"
+      },
+      {
+        "item": "Peanut butter",
+        "section": "pantry"
+      }
     ]
   },
   {
     "id": "apple-pb",
     "name": "Apple + Peanut Butter",
-    "meal_types": ["snack"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "meal_types": [
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly"
+    ],
     "dishes": 0,
     "notes": "Slice it if you feel like it, eat it whole if you don't. Both count.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Apples", "section": "produce" },
-      { "item": "Peanut butter", "section": "pantry" }
+      {
+        "item": "Apples",
+        "section": "produce"
+      },
+      {
+        "item": "Peanut butter",
+        "section": "pantry"
+      }
     ]
   },
   {
     "id": "mixed-nuts",
     "name": "Mixed Nuts / Trail Mix",
-    "meal_types": ["snack"],
-    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "meal_types": [
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "no-dishes",
+      "quick",
+      "veggie-friendly"
+    ],
     "dishes": 0,
     "notes": "Keep a bag in your bag or on the counter. Almonds, cashews, whatever you like. Good thing to grab when you're about to make a bad decision.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Mixed nuts or trail mix", "section": "pantry" }
+      {
+        "item": "Mixed nuts or trail mix",
+        "section": "pantry"
+      }
     ]
   },
   {
     "id": "edamame",
     "name": "Microwave Edamame",
-    "meal_types": ["snack"],
-    "tags": ["no-cook", "quick", "veggie-friendly", "no-dishes"],
+    "meal_types": [
+      "snack"
+    ],
+    "tags": [
+      "no-cook",
+      "quick",
+      "veggie-friendly",
+      "no-dishes"
+    ],
     "dishes": 0,
     "notes": "Frozen edamame in the bag — microwave 3–4 min, sprinkle with salt. Surprisingly filling and really satisfying to eat.",
     "recipe": null,
     "shopping_items": [
-      { "item": "Frozen edamame (in-shell bags)", "section": "frozen" }
+      {
+        "item": "Frozen edamame (in-shell bags)",
+        "section": "frozen",
+        "qty": 1,
+        "unit": "bag"
+      }
     ]
   },
   {
     "id": "hard-boiled-eggs",
     "name": "Hard Boiled Eggs",
-    "meal_types": ["snack", "breakfast"],
-    "tags": ["quick", "veggie-friendly", "no-dishes"],
+    "meal_types": [
+      "snack",
+      "breakfast"
+    ],
+    "tags": [
+      "quick",
+      "veggie-friendly",
+      "no-dishes"
+    ],
     "dishes": 0,
     "notes": "Boil a batch of 6 on Sunday, keep in the fridge all week. Grab one whenever. Everything bagel seasoning makes them way better.",
     "recipe": [
@@ -809,7 +1668,12 @@
       "Keeps in the fridge for up to a week."
     ],
     "shopping_items": [
-      { "item": "Eggs", "section": "refrigerated" }
+      {
+        "item": "Eggs",
+        "section": "refrigerated",
+        "qty": 6,
+        "unit": "eggs"
+      }
     ]
   }
 ]

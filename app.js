@@ -1359,21 +1359,27 @@ var REPEAT_BUYS = [
 ];
 
 function buildShoppingList(mealIds, repeatBuyKeys) {
-  var seen = {};
-  var bySection = {};
-  SECTIONS.forEach(function(s) { bySection[s.key] = []; });
+  // Accumulate quantities per item: { itemName: { section, qty, unit } }
+  var acc = {};
+
+  function addItem(name, section, qty, unit) {
+    if (!acc[name]) {
+      acc[name] = { section: section || "pantry", qty: qty || null, unit: unit || null };
+    } else {
+      // If both have a numeric qty and matching unit, sum them
+      if (qty && unit && acc[name].unit === unit) {
+        acc[name].qty = (acc[name].qty || 0) + qty;
+      }
+      // If they don't have matching units (or one has no qty), just keep the entry as-is
+    }
+  }
 
   mealIds.forEach(function(id) {
     var meal = getMealById(id);
     if (!meal) return;
     var items = meal.shopping_items || (meal.shopping_item ? [{ item: meal.shopping_item, section: "pantry" }] : []);
     items.forEach(function(si) {
-      if (!seen[si.item]) {
-        seen[si.item] = true;
-        var sec = si.section || "pantry";
-        if (!bySection[sec]) bySection[sec] = [];
-        bySection[sec].push(si.item);
-      }
+      addItem(si.item, si.section, si.qty, si.unit);
     });
   });
 
@@ -1382,17 +1388,29 @@ function buildShoppingList(mealIds, repeatBuyKeys) {
   (repeatBuyKeys || []).forEach(function(key) {
     var rb = REPEAT_BUYS.find(function(r) { return r.key === key; });
     if (!rb) {
-      // custom item
       var custom = customs.find(function(c) { return "custom:" + c.label === key; });
-      if (custom && !seen[custom.label]) {
-        seen[custom.label] = true;
-        bySection[custom.section || "pantry"].push(custom.label);
-      }
+      if (custom) addItem(custom.label, custom.section || "pantry", null, null);
       return;
     }
-    if (seen[rb.label]) return;
-    seen[rb.label] = true;
-    bySection[rb.section].push(rb.label);
+    addItem(rb.label, rb.section, null, null);
+  });
+
+  // Format label: "Canned black beans (3 cans)" or just "Canned black beans"
+  function formatLabel(name, entry) {
+    if (entry.qty && entry.unit) {
+      return name + " (" + entry.qty + " " + entry.unit + ")";
+    }
+    return name;
+  }
+
+  // Group into bySection for rendering
+  var bySection = {};
+  SECTIONS.forEach(function(s) { bySection[s.key] = []; });
+  Object.keys(acc).forEach(function(name) {
+    var entry = acc[name];
+    var sec = entry.section;
+    if (!bySection[sec]) bySection[sec] = [];
+    bySection[sec].push(formatLabel(name, entry));
   });
 
   return bySection;

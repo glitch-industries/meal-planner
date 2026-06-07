@@ -1,4 +1,4 @@
-# Meal Planner — App Spec
+# Roughly Chopped — App Spec
 *v2 — updated after design conversation*
 
 ## What the app does
@@ -202,6 +202,6 @@ Per the playbook:
 - Vanilla JS, no framework, no build step
 - Inline styles via JS, `el()` helper pattern
 - Single `render()` function from state
-- GitHub Pages hosting (`/meal-planner/` path)
+- GitHub Pages hosting (`/roughly-chopped/` path)
 - Service worker for PWA / home screen install
 - `/data/meals.json` — pre-seeded meal library (editable without touching code)

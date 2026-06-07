@@ -689,14 +689,22 @@ function renderPlan() {
   }
 
   // ── No Cook / Cook groups ──────────────────────────────────────────────────
+  function isSnackOnly(m) {
+    return m.meal_types.indexOf("snack") !== -1 &&
+           m.meal_types.indexOf("dinner") === -1 &&
+           m.meal_types.indexOf("lunch") === -1;
+  }
+
   function isMealNoCook(m) {
-    return m.tags.indexOf("no-cook") !== -1 ||
-           (m.tags.indexOf("freezer") !== -1 && m.tags.indexOf("crockpot") === -1);
+    return !isSnackOnly(m) && (
+      m.tags.indexOf("no-cook") !== -1 ||
+      (m.tags.indexOf("freezer") !== -1 && m.tags.indexOf("crockpot") === -1)
+    );
   }
 
   var PLAN_GROUPS = [
     { key: "no-cook", label: "No Cook",  emoji: "🥗", subtitle: "Grab, assemble, blend, or heat from frozen", filter: isMealNoCook },
-    { key: "cook",    label: "Cook",     emoji: "🍳", subtitle: "Requires cooking — usually makes several meals", filter: function(m) { return !isMealNoCook(m); } },
+    { key: "cook",    label: "Cook",     emoji: "🍳", subtitle: "Requires cooking — usually makes several meals", filter: function(m) { return !isMealNoCook(m) && !isSnackOnly(m); } },
   ];
 
   PLAN_GROUPS.forEach(function(grp) {
@@ -851,12 +859,101 @@ function renderPlan() {
     wrap.appendChild(section);
   });
 
+  // ── Snacks ────────────────────────────────────────────────────────────────
+  (function() {
+    var allSnacks = state.meals.filter(isSnackOnly);
+    var section = el("div", { style: { marginBottom: "24px" } });
+    section.appendChild(el("div", { style: { marginBottom: "10px" } }, [
+      el("div", { style: { display: "flex", alignItems: "center", gap: "6px", marginBottom: "2px" } }, [
+        el("span", {}, "🍎"),
+        el("span", { style: { fontSize: "13px", fontWeight: "700", color: C.textMuted, letterSpacing: "0.5px", textTransform: "uppercase" } }, "Snacks"),
+      ]),
+      el("p", { style: { fontSize: "11px", color: C.textMuted, margin: "0", paddingLeft: "20px" } }, "Check what you want on hand this week"),
+    ]));
+    var card = el("div", { style: { background: C.surface, border: "1.5px solid " + C.border, borderRadius: "12px", padding: "4px 14px" } });
+    allSnacks.forEach(function(m, i) {
+      var isOn = plan.meal_pool.indexOf(m.id) !== -1;
+      var row = el("div", {
+        style: {
+          display: "flex", alignItems: "center", gap: "12px",
+          padding: "12px 0", cursor: "pointer",
+          borderBottom: i < allSnacks.length - 1 ? "1px solid " + C.border : "none",
+        },
+        onClick: function() {
+          var p = getWeekPlan();
+          var idx = p.meal_pool.indexOf(m.id);
+          if (idx === -1) p.meal_pool.push(m.id);
+          else p.meal_pool.splice(idx, 1);
+          saveWeekPlan(p); render();
+        }
+      }, [
+        el("div", { style: {
+          width: "22px", height: "22px", borderRadius: "50%", flexShrink: "0",
+          background: isOn ? C.purple : "transparent",
+          border: "2px solid " + (isOn ? C.purple : C.border),
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: "12px", color: C.white,
+        }}, isOn ? "✓" : ""),
+        el("span", { style: { fontSize: "15px", color: C.textPrimary } }, m.name),
+      ]);
+      card.appendChild(row);
+    });
+    section.appendChild(card);
+    wrap.appendChild(section);
+  })();
+
+  // ── Repeat Buys ───────────────────────────────────────────────────────────
+  (function() {
+    var activeKeys = plan.repeat_buys !== undefined ? plan.repeat_buys : REPEAT_BUYS.map(function(r) { return r.key; });
+    var section = el("div", { style: { marginBottom: "24px" } });
+    section.appendChild(el("div", { style: { marginBottom: "10px" } }, [
+      el("div", { style: { display: "flex", alignItems: "center", gap: "6px", marginBottom: "2px" } }, [
+        el("span", {}, "🔁"),
+        el("span", { style: { fontSize: "13px", fontWeight: "700", color: C.textMuted, letterSpacing: "0.5px", textTransform: "uppercase" } }, "Repeat Buys"),
+      ]),
+      el("p", { style: { fontSize: "11px", color: C.textMuted, margin: "0", paddingLeft: "20px" } }, "Weekly staples — uncheck anything you don't need"),
+    ]));
+    var card = el("div", { style: { background: C.surface, border: "1.5px solid " + C.border, borderRadius: "12px", padding: "4px 14px" } });
+    REPEAT_BUYS.forEach(function(rb, i) {
+      var isOn = activeKeys.indexOf(rb.key) !== -1;
+      var row = el("div", {
+        style: {
+          display: "flex", alignItems: "center", gap: "12px",
+          padding: "12px 0", cursor: "pointer",
+          borderBottom: i < REPEAT_BUYS.length - 1 ? "1px solid " + C.border : "none",
+        },
+        onClick: function() {
+          var p = getWeekPlan();
+          var keys = p.repeat_buys !== undefined ? p.repeat_buys.slice() : REPEAT_BUYS.map(function(r) { return r.key; });
+          var idx = keys.indexOf(rb.key);
+          if (idx === -1) keys.push(rb.key);
+          else keys.splice(idx, 1);
+          p.repeat_buys = keys;
+          saveWeekPlan(p); render();
+        }
+      }, [
+        el("div", { style: {
+          width: "22px", height: "22px", borderRadius: "50%", flexShrink: "0",
+          background: isOn ? C.purple : "transparent",
+          border: "2px solid " + (isOn ? C.purple : C.border),
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: "12px", color: C.white,
+        }}, isOn ? "✓" : ""),
+        el("span", { style: { fontSize: "15px", color: C.textPrimary } }, rb.label),
+      ]);
+      card.appendChild(row);
+    });
+    section.appendChild(card);
+    wrap.appendChild(section);
+  })();
+
   // Shopping list
-  if (plan.meal_pool.length) {
+  if (plan.meal_pool.length || (plan.repeat_buys === undefined || plan.repeat_buys.length)) {
     wrap.appendChild(el("div", { style: { height: "1px", background: C.border, margin: "20px 0" } }));
 
     var ticked = plan.ticked_items || [];
-    var bySection = buildShoppingList(plan.meal_pool);
+    var activeRepeatKeys = plan.repeat_buys !== undefined ? plan.repeat_buys : REPEAT_BUYS.map(function(r) { return r.key; });
+    var bySection = buildShoppingList(plan.meal_pool, activeRepeatKeys);
     var hasAny = SECTIONS.some(function(s) { return bySection[s.key] && bySection[s.key].length; });
     var totalItems = SECTIONS.reduce(function(n, s) { return n + (bySection[s.key] ? bySection[s.key].length : 0); }, 0);
     var tickedCount = ticked.length;
@@ -953,9 +1050,18 @@ var SECTIONS = [
   { key: "refrigerated", label: "Refrigerated",  emoji: "❄️" },
   { key: "frozen",       label: "Frozen",        emoji: "🧊" },
   { key: "pantry",       label: "Pantry",        emoji: "🥫" },
+  { key: "household",    label: "Household",     emoji: "🏠" },
 ];
 
-function buildShoppingList(mealIds) {
+var REPEAT_BUYS = [
+  { key: "milk",         label: "Milk",          section: "refrigerated" },
+  { key: "coffee",       label: "Coffee",        section: "pantry" },
+  { key: "cat-food-wet", label: "Cat food (wet)", section: "household" },
+  { key: "cat-food-dry", label: "Cat food (dry)", section: "household" },
+  { key: "cat-litter",   label: "Cat litter",    section: "household" },
+];
+
+function buildShoppingList(mealIds, repeatBuyKeys) {
   var seen = {};
   var bySection = {};
   SECTIONS.forEach(function(s) { bySection[s.key] = []; });
@@ -973,6 +1079,14 @@ function buildShoppingList(mealIds) {
       }
     });
   });
+
+  (repeatBuyKeys || []).forEach(function(key) {
+    var rb = REPEAT_BUYS.find(function(r) { return r.key === key; });
+    if (!rb || seen[rb.label]) return;
+    seen[rb.label] = true;
+    bySection[rb.section].push(rb.label);
+  });
+
   return bySection;
 }
 

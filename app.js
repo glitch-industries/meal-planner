@@ -784,7 +784,7 @@ function renderPlan() {
       var candidates = state.meals.filter(function(m) {
         return grp.filter(m) && plan.meal_pool.indexOf(m.id) === -1;
       });
-      var shown = seededShuffle(candidates, seed).slice(0, 4);
+      var shown = seededShuffle(candidates, seed).slice(0, grp.key === "cook" ? 2 : 6);
 
       var pickerWrap = el("div", { style: {
         background: C.purpleLight, border: "1.5px solid " + C.border,

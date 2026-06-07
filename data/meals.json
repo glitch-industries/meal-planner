@@ -157,7 +157,7 @@
       { "item": "Flour tortillas", "section": "pantry" },
       { "item": "Shredded cheese", "section": "refrigerated" },
       { "item": "Sour cream", "section": "refrigerated" },
-      { "item": "Salsa", "section": "pantry" }
+      { "item": "Salsa roja (jarred)", "section": "pantry" }
     ]
   },
   {
@@ -178,7 +178,7 @@
       { "item": "Tortilla chips", "section": "pantry" },
       { "item": "Shredded cheese", "section": "refrigerated" },
       { "item": "Canned black beans", "section": "pantry" },
-      { "item": "Salsa", "section": "pantry" },
+      { "item": "Salsa roja (jarred)", "section": "pantry" },
       { "item": "Sour cream", "section": "refrigerated" }
     ]
   },

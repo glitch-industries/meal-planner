@@ -416,7 +416,7 @@ function renderWeek() {
       }
     }, [
       el("span", { style: { fontSize: "11px", color: isSelected ? "rgba(255,255,255,0.8)" : C.textMuted } }, dayNames[i]),
-      el("span", { style: { fontSize: "17px", fontWeight: isToday ? "700" : "400", color: isSelected ? C.white : C.textPrimary } }, d.getDate()),
+      el("span", { style: { fontSize: "17px", fontWeight: isToday ? "700" : "400", color: isSelected ? C.white : C.textPrimary } }, String(d.getDate())),
       el("div", { style: {
         width: "6px", height: "6px", borderRadius: "50%",
         background: hasMeals ? (isSelected ? C.white : C.brand) : "transparent",

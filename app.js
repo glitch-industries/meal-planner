@@ -678,27 +678,42 @@ function renderPlan() {
   });
   wrap.appendChild(themeBar);
 
-  // ── Meal sections by type ──────────────────────────────────────────────────
-  var MEAL_CATS = [
-    { key: "breakfast", label: "Breakfasts", emoji: "🌅" },
-    { key: "lunch",     label: "Lunches",    emoji: "🥗" },
-    { key: "dinner",    label: "Dinners",    emoji: "🍜" },
+  // ── Total meals summary ────────────────────────────────────────────────────
+  var totalMeals = plan.meal_pool.reduce(function(n, id) {
+    return n + ((plan.servings && plan.servings[id]) || 1);
+  }, 0);
+  if (totalMeals > 0) {
+    wrap.appendChild(el("p", { style: { fontSize: "13px", color: C.purple, fontWeight: "600", marginBottom: "20px" } },
+      totalMeals + " meals planned this week"
+    ));
+  }
+
+  // ── No Cook / Cook groups ──────────────────────────────────────────────────
+  function isMealNoCook(m) {
+    return m.tags.indexOf("no-cook") !== -1 ||
+           (m.tags.indexOf("freezer") !== -1 && m.tags.indexOf("crockpot") === -1);
+  }
+
+  var PLAN_GROUPS = [
+    { key: "no-cook", label: "No Cook",  emoji: "🥗", subtitle: "Grab, assemble, blend, or heat from frozen", filter: isMealNoCook },
+    { key: "cook",    label: "Cook",     emoji: "🍳", subtitle: "Requires cooking — usually makes several meals", filter: function(m) { return !isMealNoCook(m); } },
   ];
 
-  MEAL_CATS.forEach(function(cat) {
+  PLAN_GROUPS.forEach(function(grp) {
     var selected = plan.meal_pool.filter(function(id) {
       var m = getMealById(id);
-      return m && m.meal_types.indexOf(cat.key) !== -1;
+      return m && grp.filter(m);
     });
 
-    var section = el("div", { style: { marginBottom: "20px" } });
+    var section = el("div", { style: { marginBottom: "24px" } });
 
     // Section header
-    section.appendChild(el("div", { style: {
-      display: "flex", alignItems: "center", gap: "6px", marginBottom: "10px",
-    }}, [
-      el("span", {}, cat.emoji),
-      el("span", { style: { fontSize: "13px", fontWeight: "700", color: C.textMuted, letterSpacing: "0.5px", textTransform: "uppercase" } }, cat.label),
+    section.appendChild(el("div", { style: { marginBottom: "10px" } }, [
+      el("div", { style: { display: "flex", alignItems: "center", gap: "6px", marginBottom: "2px" } }, [
+        el("span", {}, grp.emoji),
+        el("span", { style: { fontSize: "13px", fontWeight: "700", color: C.textMuted, letterSpacing: "0.5px", textTransform: "uppercase" } }, grp.label),
+      ]),
+      el("p", { style: { fontSize: "11px", color: C.textMuted, margin: "0", paddingLeft: "20px" } }, grp.subtitle),
     ]));
 
     // Selected meal rows
@@ -706,14 +721,17 @@ function renderPlan() {
       var meal = getMealById(id);
       if (!meal) return;
       var servings = (plan.servings && plan.servings[id]) || 1;
+      var mealLabel = servings === 1 ? "1 meal" : servings + " meals";
 
       var row = el("div", { style: {
         display: "flex", alignItems: "center", gap: "8px",
         background: C.surface, border: "1.5px solid " + C.border,
-        borderRadius: "12px", padding: "10px 12px", marginBottom: "8px",
+        borderRadius: "12px", padding: "10px 14px", marginBottom: "8px",
       }}, [
-        el("div", { style: { flex: "1", fontSize: "14px", fontWeight: "600", color: C.textPrimary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, meal.name),
-        // servings −/N/+
+        el("div", { style: { flex: "1", minWidth: "0" } }, [
+          el("div", { style: { fontSize: "14px", fontWeight: "600", color: C.textPrimary, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" } }, meal.name),
+          el("div", { style: { fontSize: "11px", color: C.purple, fontWeight: "600", marginTop: "2px" } }, mealLabel),
+        ]),
         el("button", {
           style: {
             width: "26px", height: "26px", borderRadius: "50%", flexShrink: "0",
@@ -728,7 +746,6 @@ function renderPlan() {
             p.servings[id] = servings - 1; saveWeekPlan(p); render();
           }
         }, "−"),
-        el("span", { style: { fontSize: "13px", fontWeight: "600", color: C.textPrimary, minWidth: "14px", textAlign: "center", flexShrink: "0" } }, String(servings) + "×"),
         el("button", {
           style: {
             width: "26px", height: "26px", borderRadius: "50%", flexShrink: "0",
@@ -741,10 +758,9 @@ function renderPlan() {
             p.servings[id] = servings + 1; saveWeekPlan(p); render();
           }
         }, "+"),
-        // remove
         el("button", {
           style: {
-            width: "26px", height: "26px", borderRadius: "50%", flexShrink: "0",
+            width: "26px", height: "26px", flexShrink: "0",
             border: "none", background: "none", cursor: "pointer",
             fontSize: "18px", color: C.textMuted, padding: "0",
             display: "flex", alignItems: "center", justifyContent: "center",
@@ -761,14 +777,14 @@ function renderPlan() {
       section.appendChild(row);
     });
 
-    // Picker (open for this category)
-    var pickerOpen = state.picker && state.picker.type === cat.key;
+    // Picker
+    var pickerOpen = state.picker && state.picker.type === grp.key;
     if (pickerOpen) {
       var seed = state.picker.seed || 0;
       var candidates = state.meals.filter(function(m) {
-        return m.meal_types.indexOf(cat.key) !== -1 && plan.meal_pool.indexOf(m.id) === -1;
+        return grp.filter(m) && plan.meal_pool.indexOf(m.id) === -1;
       });
-      var shown = seededShuffle(candidates, seed).slice(0, 3);
+      var shown = seededShuffle(candidates, seed).slice(0, 4);
 
       var pickerWrap = el("div", { style: {
         background: C.purpleLight, border: "1.5px solid " + C.border,
@@ -776,10 +792,11 @@ function renderPlan() {
       }});
 
       if (shown.length === 0) {
-        pickerWrap.appendChild(el("p", { style: { fontSize: "13px", color: C.textMuted, padding: "4px 0" } }, "All options are already in your plan."));
+        pickerWrap.appendChild(el("p", { style: { fontSize: "13px", color: C.textMuted, padding: "4px 0" } }, "Everything's already in your plan."));
       } else {
         shown.forEach(function(m, idx2) {
-          var opt = el("div", {
+          var def = getDefaultServings(m.id);
+          pickerWrap.appendChild(el("div", {
             style: {
               display: "flex", alignItems: "center", gap: "10px",
               padding: "10px 4px", cursor: "pointer",
@@ -790,27 +807,24 @@ function renderPlan() {
               if (p.meal_pool.indexOf(m.id) === -1) {
                 p.meal_pool.push(m.id);
                 if (!p.servings) p.servings = {};
-                p.servings[m.id] = getDefaultServings(m.id);
+                p.servings[m.id] = def;
               }
-              saveWeekPlan(p);
-              state.picker = null;
-              render();
+              saveWeekPlan(p); state.picker = null; render();
             }
           }, [
             el("div", { style: { flex: "1" } }, [
               el("span", { style: { fontSize: "14px", fontWeight: "600", color: C.textPrimary, display: "block" } }, m.name),
-              getDefaultServings(m.id) > 1 ? el("span", { style: { fontSize: "11px", color: C.textMuted } }, "~" + getDefaultServings(m.id) + " meals from one batch") : null,
+              def > 1 ? el("span", { style: { fontSize: "11px", color: C.textMuted } }, "~" + def + " meals from one batch") : null,
             ]),
             el("span", { style: { fontSize: "13px", color: C.purple, fontWeight: "600", flexShrink: "0" } }, "+ add"),
-          ]);
-          pickerWrap.appendChild(opt);
+          ]));
         });
       }
 
       pickerWrap.appendChild(el("div", { style: { display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: "10px" } }, [
         el("button", {
           style: { background: "none", border: "none", cursor: "pointer", fontSize: "13px", color: C.purple, fontWeight: "600", padding: "0" },
-          onClick: function() { state.picker = { type: cat.key, seed: seed + 1 }; render(); }
+          onClick: function() { state.picker = { type: grp.key, seed: seed + 1 }; render(); }
         }, "↻ different options"),
         el("button", {
           style: { background: "none", border: "none", cursor: "pointer", fontSize: "13px", color: C.textMuted, padding: "0" },
@@ -820,7 +834,6 @@ function renderPlan() {
       section.appendChild(pickerWrap);
     }
 
-    // Add button
     if (!pickerOpen) {
       section.appendChild(el("button", {
         style: {
@@ -829,10 +842,10 @@ function renderPlan() {
           fontSize: "13px", color: C.textMuted, fontWeight: "500",
         },
         onClick: function() {
-          state.picker = { type: cat.key, seed: Math.floor(Math.random() * 100) };
+          state.picker = { type: grp.key, seed: Math.floor(Math.random() * 100) };
           render();
         }
-      }, "+ add a " + cat.key));
+      }, "+ add a " + grp.label.toLowerCase() + " meal"));
     }
 
     wrap.appendChild(section);

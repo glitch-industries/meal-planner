@@ -787,7 +787,7 @@
     "id": "edamame",
     "name": "Microwave Edamame",
     "meal_types": ["snack"],
-    "tags": ["quick", "veggie-friendly", "no-dishes"],
+    "tags": ["no-cook", "quick", "veggie-friendly", "no-dishes"],
     "dishes": 0,
     "notes": "Frozen edamame in the bag — microwave 3–4 min, sprinkle with salt. Surprisingly filling and really satisfying to eat.",
     "recipe": null,

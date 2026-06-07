@@ -1,0 +1,92 @@
+[
+  {
+    "id": "eggo-pb",
+    "name": "Eggos + Peanut Butter",
+    "meal_types": ["breakfast"],
+    "tags": ["no-cook", "no-dishes", "quick", "favorite"],
+    "dishes": 0,
+    "notes": "Add chocolate chips if you want a treat. Toast them a little longer for crispy edges.",
+    "recipe": null,
+    "shopping_item": "Eggos (frozen waffles), peanut butter"
+  },
+  {
+    "id": "salad-kit-chicken",
+    "name": "Bag Salad Kit + Kevin's Chicken",
+    "meal_types": ["lunch", "dinner"],
+    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly", "favorite"],
+    "dishes": 0,
+    "notes": "Throw in extra spinach, cherry tomatoes, shredded cheese — whatever's around. The kit dressing is usually enough.",
+    "recipe": null,
+    "shopping_item": "bag salad kit, Kevin's pre-cooked chicken (refrigerated section, Target), shredded cheese"
+  },
+  {
+    "id": "frozen-veggie-meal",
+    "name": "Frozen Veggie Meal",
+    "meal_types": ["lunch", "dinner"],
+    "tags": ["freezer", "quick", "veggie-friendly", "1-dish"],
+    "dishes": 1,
+    "notes": "Annie's, Trader Joe's, whatever looks good. Grab 4–5 varieties so you have options.",
+    "recipe": null,
+    "shopping_item": "frozen veggie meals (4–5)"
+  },
+  {
+    "id": "scrambled-eggs-toast",
+    "name": "Scrambled Eggs + Toast",
+    "meal_types": ["breakfast", "lunch"],
+    "tags": ["quick", "veggie-friendly", "1-dish"],
+    "dishes": 1,
+    "notes": "Season however you feel — everything bagel seasoning, hot sauce, fresh herbs if you have them.",
+    "recipe": [
+      "Crack 2–3 eggs into a bowl, scramble with a fork.",
+      "Heat a small pan on medium-low, add a bit of butter.",
+      "Pour in eggs. Don't touch them for 30 seconds.",
+      "Gently push the eggs around until just barely set — they'll keep cooking off heat.",
+      "Toast your bread while the eggs rest. Season however you like."
+    ],
+    "shopping_item": "eggs, bread"
+  },
+  {
+    "id": "veggie-quesadilla",
+    "name": "Veggie Quesadilla",
+    "meal_types": ["lunch", "dinner"],
+    "tags": ["quick", "veggie-friendly", "1-dish"],
+    "dishes": 1,
+    "notes": "Great way to use up random veggies. Frozen corn, canned black beans, cheese — whatever's around.",
+    "recipe": [
+      "Heat a pan on medium. No oil needed if you're using a nonstick.",
+      "Lay a tortilla flat, add shredded cheese on one half.",
+      "Add whatever veggies: frozen corn (thawed), canned black beans, spinach, peppers.",
+      "Fold the tortilla over.",
+      "Cook 2–3 min per side until golden and melty.",
+      "Cut in half. Season with hot sauce, sour cream, salsa — whatever you have."
+    ],
+    "shopping_item": "flour tortillas, shredded cheese, canned black beans, frozen corn"
+  },
+  {
+    "id": "greek-yogurt-bowl",
+    "name": "Greek Yogurt Bowl",
+    "meal_types": ["breakfast", "snack"],
+    "tags": ["no-cook", "no-dishes", "quick"],
+    "dishes": 0,
+    "notes": "Add granola, fruit, honey, or nut butter. Whatever sounds good.",
+    "recipe": null,
+    "shopping_item": "Greek yogurt (plain or vanilla), granola, fruit"
+  },
+  {
+    "id": "pasta-with-jarred-sauce",
+    "name": "Pasta + Jarred Sauce",
+    "meal_types": ["dinner"],
+    "tags": ["veggie-friendly", "2-dish"],
+    "dishes": 2,
+    "notes": "Throw in frozen spinach or canned white beans for extra substance. Season the sauce with garlic powder, red pepper flakes, parmesan.",
+    "recipe": [
+      "Boil salted water in a pot. Add pasta.",
+      "Cook until just tender (check the box — usually 8–10 min).",
+      "While it cooks, warm the jarred sauce in a second pan.",
+      "Optional: stir in frozen spinach or canned white beans.",
+      "Drain pasta, add to sauce. Toss.",
+      "Season with salt, red pepper flakes, parmesan if you have it."
+    ],
+    "shopping_item": "pasta, jarred marinara sauce, optional: frozen spinach or canned white beans"
+  }
+]

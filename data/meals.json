@@ -7,7 +7,10 @@
     "dishes": 0,
     "notes": "Add chocolate chips if you want a treat. Toast them a little longer for crispy edges.",
     "recipe": null,
-    "shopping_item": "Eggos (frozen waffles), peanut butter"
+    "shopping_items": [
+      { "item": "Eggos (frozen waffles)", "section": "frozen" },
+      { "item": "Peanut butter", "section": "pantry" }
+    ]
   },
   {
     "id": "salad-kit-chicken",
@@ -17,7 +20,11 @@
     "dishes": 0,
     "notes": "Throw in extra spinach, cherry tomatoes, shredded cheese — whatever's around. The kit dressing is usually enough.",
     "recipe": null,
-    "shopping_item": "bag salad kit, Kevin's pre-cooked chicken (refrigerated section, Target), shredded cheese"
+    "shopping_items": [
+      { "item": "Bag salad kit", "section": "produce" },
+      { "item": "Kevin's pre-cooked chicken", "section": "refrigerated" },
+      { "item": "Shredded cheese", "section": "refrigerated" }
+    ]
   },
   {
     "id": "frozen-veggie-meal",
@@ -27,7 +34,9 @@
     "dishes": 1,
     "notes": "Annie's, Trader Joe's, whatever looks good. Grab 4–5 varieties so you have options.",
     "recipe": null,
-    "shopping_item": "frozen veggie meals (4–5)"
+    "shopping_items": [
+      { "item": "Frozen veggie meals (grab 4–5 varieties)", "section": "frozen" }
+    ]
   },
   {
     "id": "scrambled-eggs-toast",
@@ -43,7 +52,10 @@
       "Gently push the eggs around until just barely set — they'll keep cooking off heat.",
       "Toast your bread while the eggs rest. Season however you like."
     ],
-    "shopping_item": "eggs, bread"
+    "shopping_items": [
+      { "item": "Eggs", "section": "refrigerated" },
+      { "item": "Bread", "section": "pantry" }
+    ]
   },
   {
     "id": "veggie-quesadilla",
@@ -60,7 +72,12 @@
       "Cook 2–3 min per side until golden and melty.",
       "Cut in half. Season with hot sauce, sour cream, salsa — whatever you have."
     ],
-    "shopping_item": "flour tortillas, shredded cheese, canned black beans, frozen corn"
+    "shopping_items": [
+      { "item": "Flour tortillas", "section": "pantry" },
+      { "item": "Shredded cheese", "section": "refrigerated" },
+      { "item": "Canned black beans", "section": "pantry" },
+      { "item": "Frozen corn", "section": "frozen" }
+    ]
   },
   {
     "id": "greek-yogurt-bowl",
@@ -70,7 +87,11 @@
     "dishes": 0,
     "notes": "Add granola, fruit, honey, or nut butter. Whatever sounds good.",
     "recipe": null,
-    "shopping_item": "Greek yogurt (plain or vanilla), granola, fruit"
+    "shopping_items": [
+      { "item": "Greek yogurt", "section": "refrigerated" },
+      { "item": "Granola", "section": "pantry" },
+      { "item": "Fresh fruit", "section": "produce" }
+    ]
   },
   {
     "id": "pasta-with-jarred-sauce",
@@ -87,6 +108,11 @@
       "Drain pasta, add to sauce. Toss.",
       "Season with salt, red pepper flakes, parmesan if you have it."
     ],
-    "shopping_item": "pasta, jarred marinara sauce, optional: frozen spinach or canned white beans"
+    "shopping_items": [
+      { "item": "Pasta", "section": "pantry" },
+      { "item": "Jarred marinara sauce", "section": "pantry" },
+      { "item": "Frozen spinach (optional)", "section": "frozen" },
+      { "item": "Canned white beans (optional)", "section": "pantry" }
+    ]
   }
 ]

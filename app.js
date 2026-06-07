@@ -5,6 +5,8 @@ var C = {
   brand:       "#c1694f",
   accent:      "#e8a598",
   accent2:     "#d4826a",
+  purple:      "#9b8ec4",  // eggplant lavender
+  purpleLight: "#ede9f8",  // pale purple tint
   textPrimary: "#3d2b23",
   textMuted:   "#9c7b72",
   chipActive:  "#c1694f",
@@ -292,7 +294,7 @@ function renderMealChip(meal, logged, onToggle) {
     tags.appendChild(el("span", { style: { fontSize: "10px", color: logged ? "rgba(255,255,255,0.7)" : C.textMuted } }, "2 dishes"));
   }
   if (meal.recipe) {
-    var recipeBtn = el("span", { style: { fontSize: "10px", color: logged ? "rgba(255,255,255,0.7)" : C.accent2, cursor: "pointer" } }, "recipe ↗");
+    var recipeBtn = el("span", { style: { fontSize: "10px", color: logged ? "rgba(255,255,255,0.7)" : C.purple, cursor: "pointer", fontWeight: "600" } }, "recipe ↗");
     recipeBtn.addEventListener("click", function(e) {
       e.stopPropagation();
       state.modal = { type: "recipe", data: meal };
@@ -312,8 +314,8 @@ function renderHabits(log) {
   wrap.appendChild(el("p", { style: { fontSize: "13px", fontWeight: "600", color: C.textMuted, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: "12px" } }, "Habits"));
 
   var habits = [
-    { key: "ate_veggie", icon: "🥦", label: "Ate a vegetable" },
-    { key: "drank_water", icon: "💧", label: "Had a glass of water" },
+    { key: "ate_veggie",   icon: "🍆", label: "Ate a vegetable", activeColor: C.purple, activeBg: C.purpleLight },
+    { key: "drank_water",  icon: "💧", label: "Had a glass of water", activeColor: C.accent2, activeBg: "#fce8e0" },
   ];
 
   habits.forEach(function(h) {
@@ -321,8 +323,8 @@ function renderHabits(log) {
     var row = el("div", {
       style: {
         display: "flex", alignItems: "center", gap: "12px",
-        background: active ? C.accent : C.surface,
-        border: "1.5px solid " + (active ? C.accent : C.border),
+        background: active ? h.activeBg : C.surface,
+        border: "1.5px solid " + (active ? h.activeColor : C.border),
         borderRadius: "12px", padding: "12px 16px", marginBottom: "8px",
         cursor: "pointer", transition: "all 0.15s",
       },
@@ -334,11 +336,11 @@ function renderHabits(log) {
       }
     }, [
       el("span", { style: { fontSize: "20px" } }, h.icon),
-      el("span", { style: { fontSize: "15px", fontWeight: "500", color: active ? C.white : C.textPrimary } }, h.label),
+      el("span", { style: { fontSize: "15px", fontWeight: "500", color: active ? h.activeColor : C.textPrimary } }, h.label),
       el("div", { style: { marginLeft: "auto", width: "20px", height: "20px", borderRadius: "50%",
-        background: active ? C.white : "transparent", border: "2px solid " + (active ? C.white : C.border),
+        background: active ? h.activeColor : "transparent", border: "2px solid " + (active ? h.activeColor : C.border),
         display: "flex", alignItems: "center", justifyContent: "center", fontSize: "11px",
-        color: C.accent,
+        color: C.white,
       }}, active ? "✓" : ""),
     ]);
     wrap.appendChild(row);
@@ -504,8 +506,8 @@ function renderWeek() {
 
 function renderHabitsForDate(log, dateStr) {
   var habits = [
-    { key: "ate_veggie", icon: "🥦", label: "Ate a vegetable" },
-    { key: "drank_water", icon: "💧", label: "Had a glass of water" },
+    { key: "ate_veggie",  icon: "🍆", label: "Ate a vegetable", activeColor: C.purple, activeBg: C.purpleLight },
+    { key: "drank_water", icon: "💧", label: "Had a glass of water", activeColor: C.accent2, activeBg: "#fce8e0" },
   ];
   var wrap = el("div", {});
   wrap.appendChild(el("p", { style: { fontSize: "13px", fontWeight: "600", color: C.textMuted, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: "10px" } }, "Habits"));
@@ -515,8 +517,8 @@ function renderHabitsForDate(log, dateStr) {
     var row = el("div", {
       style: {
         display: "flex", alignItems: "center", gap: "10px",
-        background: active ? C.accent : C.surface,
-        border: "1.5px solid " + (active ? C.accent : C.border),
+        background: active ? h.activeBg : C.surface,
+        border: "1.5px solid " + (active ? h.activeColor : C.border),
         borderRadius: "10px", padding: "10px 14px", marginBottom: "8px",
         cursor: "pointer",
       },
@@ -528,7 +530,7 @@ function renderHabitsForDate(log, dateStr) {
       }
     }, [
       el("span", { style: { fontSize: "18px" } }, h.icon),
-      el("span", { style: { fontSize: "14px", fontWeight: "500", color: active ? C.white : C.textPrimary } }, h.label),
+      el("span", { style: { fontSize: "14px", fontWeight: "500", color: active ? h.activeColor : C.textPrimary } }, h.label),
     ]);
     wrap.appendChild(row);
   });
@@ -592,7 +594,7 @@ function renderLibraryCard(meal) {
   ]);
 
   row.appendChild(info);
-  if (meal.recipe) row.appendChild(el("span", { style: { fontSize: "12px", color: C.accent2, fontWeight: "500" } }, "recipe"));
+  if (meal.recipe) row.appendChild(el("span", { style: { fontSize: "12px", color: C.purple, fontWeight: "600", background: C.purpleLight, padding: "2px 8px", borderRadius: "10px" } }, "recipe"));
   row.appendChild(el("span", { style: { fontSize: "18px", color: C.textMuted } }, "›"));
 
   card.appendChild(row);
@@ -626,7 +628,6 @@ function renderPlan() {
         var idx = p.meal_pool.indexOf(meal.id);
         if (idx === -1) p.meal_pool.push(meal.id);
         else p.meal_pool.splice(idx, 1);
-        p.shopping_list = buildShoppingList(p.meal_pool);
         saveWeekPlan(p);
         render();
       }
@@ -649,38 +650,81 @@ function renderPlan() {
   // Shopping list
   if (plan.meal_pool.length) {
     wrap.appendChild(el("div", { style: { height: "1px", background: C.border, margin: "20px 0" } }));
-    wrap.appendChild(el("p", { style: { fontSize: "13px", fontWeight: "600", color: C.textMuted, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: "12px" } }, "Shopping List"));
+    wrap.appendChild(el("p", { style: { fontSize: "13px", fontWeight: "600", color: C.textMuted, letterSpacing: "0.5px", textTransform: "uppercase", marginBottom: "16px" } }, "Shopping List"));
 
-    plan.shopping_list.forEach(function(item) {
-      var row = el("div", { style: {
-        display: "flex", gap: "10px", alignItems: "flex-start",
-        padding: "10px 0", borderBottom: "1px solid " + C.border,
-      }}, [
-        el("span", { style: { fontSize: "14px", color: C.textMuted, marginTop: "1px" } }, "•"),
-        el("div", { style: { flex: "1" } }, [
-          el("span", { style: { fontSize: "15px", color: C.textPrimary } }, item.item),
-          item.qty ? el("span", { style: { fontSize: "13px", color: C.textMuted } }, " — " + item.qty) : null,
-        ]),
-      ]);
-      wrap.appendChild(row);
-    });
+    var bySection = buildShoppingList(plan.meal_pool);
+    var hasAny = SECTIONS.some(function(s) { return bySection[s.key] && bySection[s.key].length; });
+
+    if (!hasAny) {
+      wrap.appendChild(el("p", { style: { color: C.textMuted, fontSize: "14px" } }, "No items yet."));
+    } else {
+      SECTIONS.forEach(function(s) {
+        var items = bySection[s.key];
+        if (!items || !items.length) return;
+
+        // Section header
+        wrap.appendChild(el("div", { style: {
+          display: "flex", alignItems: "center", gap: "8px",
+          marginBottom: "8px", marginTop: "4px",
+        }}, [
+          el("span", { style: { fontSize: "16px" } }, s.emoji),
+          el("span", { style: { fontSize: "13px", fontWeight: "700", color: C.purple, letterSpacing: "0.4px", textTransform: "uppercase" } }, s.label),
+        ]));
+
+        var sectionCard = el("div", { style: {
+          background: C.surface, border: "1.5px solid " + C.border,
+          borderRadius: "12px", padding: "4px 14px", marginBottom: "14px",
+        }});
+
+        items.forEach(function(itemText, i) {
+          var row = el("div", { style: {
+            display: "flex", gap: "10px", alignItems: "center",
+            padding: "11px 0",
+            borderBottom: i < items.length - 1 ? "1px solid " + C.border : "none",
+          }}, [
+            el("div", { style: {
+              width: "8px", height: "8px", borderRadius: "50%", flexShrink: "0",
+              background: C.purpleLight, border: "1.5px solid " + C.purple,
+            }}),
+            el("span", { style: { fontSize: "15px", color: C.textPrimary } }, itemText),
+          ]);
+          sectionCard.appendChild(row);
+        });
+
+        wrap.appendChild(sectionCard);
+      });
+    }
   }
 
   return wrap;
 }
 
+var SECTIONS = [
+  { key: "produce",      label: "Produce",      emoji: "🥬" },
+  { key: "refrigerated", label: "Refrigerated",  emoji: "❄️" },
+  { key: "frozen",       label: "Frozen",        emoji: "🧊" },
+  { key: "pantry",       label: "Pantry",        emoji: "🥫" },
+];
+
 function buildShoppingList(mealIds) {
   var seen = {};
-  var list = [];
+  var bySection = {};
+  SECTIONS.forEach(function(s) { bySection[s.key] = []; });
+
   mealIds.forEach(function(id) {
     var meal = getMealById(id);
-    if (!meal || !meal.shopping_item) return;
-    if (!seen[meal.shopping_item]) {
-      seen[meal.shopping_item] = true;
-      list.push({ item: meal.shopping_item, qty: null });
-    }
+    if (!meal) return;
+    var items = meal.shopping_items || (meal.shopping_item ? [{ item: meal.shopping_item, section: "pantry" }] : []);
+    items.forEach(function(si) {
+      if (!seen[si.item]) {
+        seen[si.item] = true;
+        var sec = si.section || "pantry";
+        if (!bySection[sec]) bySection[sec] = [];
+        bySection[sec].push(si.item);
+      }
+    });
   });
-  return list;
+  return bySection;
 }
 
 // ─── MODALS ───────────────────────────────────────────────────────────────────

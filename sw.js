@@ -1,4 +1,4 @@
-var CACHE = "meal-planner-v1";
+var CACHE = "meal-planner-v2";
 var FILES = [
   "./",
   "./index.html",

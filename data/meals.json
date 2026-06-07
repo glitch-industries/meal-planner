@@ -611,5 +611,165 @@
       { "item": "Small pasta (ditalini or elbows)", "section": "pantry" },
       { "item": "Frozen spinach", "section": "frozen" }
     ]
+  },
+
+  {
+    "id": "protein-smoothie",
+    "name": "Protein Smoothie",
+    "meal_types": ["breakfast", "snack"],
+    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly", "favorite"],
+    "dishes": 0,
+    "notes": "Drink straight from the bullet cup — zero dishes. Frozen fruit means no ice needed. Add a handful of spinach if you have it; you won't taste it.",
+    "recipe": [
+      "Add to bullet cup: 1 scoop protein powder, a big handful of frozen fruit, fill to the line with milk.",
+      "Optional: toss in a handful of baby spinach — it turns green but tastes like fruit.",
+      "Blend until smooth. Drink from the cup."
+    ],
+    "shopping_items": [
+      { "item": "Protein powder (Clean Eating)", "section": "pantry" },
+      { "item": "Frozen fruit mix (mango, berry, or tropical)", "section": "frozen" },
+      { "item": "Milk or oat milk", "section": "refrigerated" }
+    ]
+  },
+  {
+    "id": "green-smoothie",
+    "name": "Green Smoothie",
+    "meal_types": ["breakfast", "snack"],
+    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "dishes": 0,
+    "notes": "Sounds intimidating, tastes like a tropical fruit smoothie. The spinach disappears into the frozen mango. Good way to sneak in extra veggies without thinking about it.",
+    "recipe": [
+      "Add to bullet cup: 1 scoop protein powder, a big handful of frozen mango or pineapple, a handful of baby spinach, fill with milk.",
+      "Blend until totally smooth — the spinach takes a few extra seconds.",
+      "Drink from the cup."
+    ],
+    "shopping_items": [
+      { "item": "Protein powder (Clean Eating)", "section": "pantry" },
+      { "item": "Frozen mango or pineapple chunks", "section": "frozen" },
+      { "item": "Baby spinach", "section": "produce" },
+      { "item": "Milk or oat milk", "section": "refrigerated" }
+    ]
+  },
+  {
+    "id": "pb-banana-smoothie",
+    "name": "PB Banana Smoothie",
+    "meal_types": ["breakfast", "snack"],
+    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "dishes": 0,
+    "notes": "Tastes like dessert. Freeze your ripe bananas so you never have to throw one out — just peel and freeze in a bag.",
+    "recipe": [
+      "Add to bullet cup: 1 scoop protein powder, 1 banana (frozen is even better), 1 big spoonful of peanut butter, fill with milk.",
+      "Blend until smooth. Drink from the cup."
+    ],
+    "shopping_items": [
+      { "item": "Protein powder (Clean Eating)", "section": "pantry" },
+      { "item": "Bananas", "section": "produce" },
+      { "item": "Peanut butter", "section": "pantry" },
+      { "item": "Milk or oat milk", "section": "refrigerated" }
+    ]
+  },
+
+  {
+    "id": "cuties",
+    "name": "Cuties / Clementines",
+    "meal_types": ["snack"],
+    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "dishes": 0,
+    "notes": "Grab a bag and keep them out on the counter. The easier something is to grab, the more you actually eat it.",
+    "recipe": null,
+    "shopping_items": [
+      { "item": "Cuties / clementines (bag)", "section": "produce" }
+    ]
+  },
+  {
+    "id": "banana-snack",
+    "name": "Banana",
+    "meal_types": ["snack", "breakfast"],
+    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "dishes": 0,
+    "notes": "Keep a bunch on the counter. Freeze the ones going brown — they're perfect for smoothies.",
+    "recipe": null,
+    "shopping_items": [
+      { "item": "Bananas", "section": "produce" }
+    ]
+  },
+  {
+    "id": "string-cheese",
+    "name": "String Cheese",
+    "meal_types": ["snack"],
+    "tags": ["no-cook", "no-dishes", "quick"],
+    "dishes": 0,
+    "notes": "Keep a pack in the fridge. Grab one when you need something fast.",
+    "recipe": null,
+    "shopping_items": [
+      { "item": "String cheese / cheese sticks", "section": "refrigerated" }
+    ]
+  },
+  {
+    "id": "crackers-pb",
+    "name": "Crackers + Peanut Butter",
+    "meal_types": ["snack"],
+    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "dishes": 0,
+    "notes": "Any cracker works. Add a few apple slices on the side if you have them.",
+    "recipe": null,
+    "shopping_items": [
+      { "item": "Crackers (Ritz, Triscuits, or whatever)", "section": "pantry" },
+      { "item": "Peanut butter", "section": "pantry" }
+    ]
+  },
+  {
+    "id": "apple-pb",
+    "name": "Apple + Peanut Butter",
+    "meal_types": ["snack"],
+    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "dishes": 0,
+    "notes": "Slice it if you feel like it, eat it whole if you don't. Both count.",
+    "recipe": null,
+    "shopping_items": [
+      { "item": "Apples", "section": "produce" },
+      { "item": "Peanut butter", "section": "pantry" }
+    ]
+  },
+  {
+    "id": "mixed-nuts",
+    "name": "Mixed Nuts / Trail Mix",
+    "meal_types": ["snack"],
+    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "dishes": 0,
+    "notes": "Keep a bag in your bag or on the counter. Almonds, cashews, whatever you like. Good thing to grab when you're about to make a bad decision.",
+    "recipe": null,
+    "shopping_items": [
+      { "item": "Mixed nuts or trail mix", "section": "pantry" }
+    ]
+  },
+  {
+    "id": "edamame",
+    "name": "Microwave Edamame",
+    "meal_types": ["snack"],
+    "tags": ["quick", "veggie-friendly", "no-dishes"],
+    "dishes": 0,
+    "notes": "Frozen edamame in the bag — microwave 3–4 min, sprinkle with salt. Surprisingly filling and really satisfying to eat.",
+    "recipe": null,
+    "shopping_items": [
+      { "item": "Frozen edamame (in-shell bags)", "section": "frozen" }
+    ]
+  },
+  {
+    "id": "hard-boiled-eggs",
+    "name": "Hard Boiled Eggs",
+    "meal_types": ["snack", "breakfast"],
+    "tags": ["quick", "veggie-friendly", "no-dishes"],
+    "dishes": 0,
+    "notes": "Boil a batch of 6 on Sunday, keep in the fridge all week. Grab one whenever. Everything bagel seasoning makes them way better.",
+    "recipe": [
+      "Put eggs in a pot, cover with cold water by an inch.",
+      "Bring to a boil, then turn off the heat and cover for 10–12 min.",
+      "Transfer to a bowl of ice water for 5 min, then peel or refrigerate in the shell.",
+      "Keeps in the fridge for up to a week."
+    ],
+    "shopping_items": [
+      { "item": "Eggs", "section": "refrigerated" }
+    ]
   }
 ]

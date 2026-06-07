@@ -408,5 +408,117 @@
       { "item": "Cottage cheese", "section": "refrigerated" },
       { "item": "Cherry tomatoes or berries", "section": "produce" }
     ]
+  },
+
+  {
+    "id": "butternut-squash-soup",
+    "name": "Butternut Squash Soup (Crockpot)",
+    "meal_types": ["lunch", "dinner"],
+    "tags": ["crockpot", "veggie-friendly", "1-dish", "favorite"],
+    "dishes": 1,
+    "notes": "Use pre-cut frozen squash to skip all the peeling and chopping. Blend it smooth with the immersion blender. Coconut milk makes it creamy and a little bit fancy.",
+    "recipe": [
+      "Add to crockpot: frozen butternut squash (one bag), vegetable broth (about 2 cups), garlic powder, cumin, smoked paprika, salt, a pinch of cinnamon.",
+      "Cook on low 6–8 hours or high 3–4 hours until squash is completely soft.",
+      "Use the immersion blender directly in the crockpot and blend until smooth.",
+      "Stir in a splash of coconut milk or cream. Taste and adjust seasoning.",
+      "Top with a swirl of cream, pumpkin seeds, or crusty bread for dipping."
+    ],
+    "shopping_items": [
+      { "item": "Frozen butternut squash (cubed)", "section": "frozen" },
+      { "item": "Vegetable broth", "section": "pantry" },
+      { "item": "Coconut milk (canned)", "section": "pantry" }
+    ]
+  },
+  {
+    "id": "potato-leek-soup",
+    "name": "Creamy Potato Soup (Crockpot)",
+    "meal_types": ["lunch", "dinner"],
+    "tags": ["crockpot", "veggie-friendly", "1-dish"],
+    "dishes": 1,
+    "notes": "Tastes like a lot of effort, requires almost none. Blend half of it and leave some chunks for texture. Top with shredded cheese and sour cream.",
+    "recipe": [
+      "Chop Yukon gold potatoes into rough chunks — no need to peel.",
+      "Add to crockpot with broth, garlic powder, onion powder, salt, pepper.",
+      "Cook on low 6–8 hours or high 3–4 hours until potatoes fall apart.",
+      "Use the immersion blender to blend about half — keep it chunky.",
+      "Stir in a big spoonful of sour cream or cream cheese.",
+      "Top with shredded cheese, chives or green onion, more sour cream."
+    ],
+    "shopping_items": [
+      { "item": "Yukon gold potatoes", "section": "produce" },
+      { "item": "Vegetable or chicken broth", "section": "pantry" },
+      { "item": "Sour cream or cream cheese", "section": "refrigerated" },
+      { "item": "Shredded cheese", "section": "refrigerated" }
+    ]
+  },
+  {
+    "id": "red-lentil-soup",
+    "name": "Red Lentil Soup (Crockpot)",
+    "meal_types": ["lunch", "dinner"],
+    "tags": ["crockpot", "veggie-friendly", "1-dish"],
+    "dishes": 1,
+    "notes": "Red lentils dissolve as they cook — no draining, no blending needed, but the immersion blender makes it extra silky if you want. Very filling, very cheap.",
+    "recipe": [
+      "Add to crockpot: rinsed red lentils (1 cup), broth (4 cups), canned diced tomatoes, garlic powder, cumin, turmeric, smoked paprika, salt.",
+      "Cook on low 6–8 hours or high 3–4 hours. Lentils will break down on their own.",
+      "Optional: use immersion blender for a smoother texture.",
+      "Squeeze in half a lemon at the end — it brightens everything.",
+      "Serve with pita or crusty bread."
+    ],
+    "shopping_items": [
+      { "item": "Red lentils", "section": "pantry" },
+      { "item": "Vegetable broth", "section": "pantry" },
+      { "item": "Canned diced tomatoes", "section": "pantry" },
+      { "item": "Lemon", "section": "produce" }
+    ]
+  },
+
+  {
+    "id": "snack-plate",
+    "name": "Snack Plate",
+    "meal_types": ["lunch", "dinner", "snack"],
+    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly", "favorite"],
+    "dishes": 0,
+    "notes": "This is a meal. Grab whatever's around and put it on a plate. The vibe is: something crunchy, something creamy, something fresh, something sweet. That's it.",
+    "recipe": null,
+    "shopping_items": [
+      { "item": "Crackers (any kind)", "section": "pantry" },
+      { "item": "Cheese (sliced or block)", "section": "refrigerated" },
+      { "item": "Grapes or apple", "section": "produce" },
+      { "item": "Deli turkey or hard boiled eggs", "section": "refrigerated" },
+      { "item": "Hummus or peanut butter for dipping", "section": "refrigerated" }
+    ]
+  },
+  {
+    "id": "caprese-plate",
+    "name": "Caprese + Bread",
+    "meal_types": ["lunch", "dinner", "snack"],
+    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "dishes": 0,
+    "notes": "Fresh mozzarella, tomatoes, olive oil, salt. That's really it. A little balsamic glaze if you have it. Bread for soaking up the oil.",
+    "recipe": null,
+    "shopping_items": [
+      { "item": "Fresh mozzarella", "section": "refrigerated" },
+      { "item": "Tomatoes or cherry tomatoes", "section": "produce" },
+      { "item": "Crusty bread or baguette", "section": "pantry" },
+      { "item": "Balsamic glaze (optional)", "section": "pantry" }
+    ]
+  },
+  {
+    "id": "bento-box",
+    "name": "Bento Box",
+    "meal_types": ["lunch"],
+    "tags": ["no-cook", "no-dishes", "quick", "veggie-friendly"],
+    "dishes": 0,
+    "notes": "Literally just fill compartments. Leftovers, fresh veg, dip, fruit, crackers, cheese, hard boiled eggs — whatever fits. The point is variety with zero cooking.",
+    "recipe": null,
+    "shopping_items": [
+      { "item": "Baby carrots or cucumber slices", "section": "produce" },
+      { "item": "Hummus or ranch dip", "section": "refrigerated" },
+      { "item": "Cheese cubes or string cheese", "section": "refrigerated" },
+      { "item": "Crackers", "section": "pantry" },
+      { "item": "Grapes, blueberries, or apple slices", "section": "produce" }
+    ]
   }
 ]

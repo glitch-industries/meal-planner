@@ -131,7 +131,7 @@
       "Serve with extra sour cream."
     ],
     "shopping_items": [
-      { "item": "Pre-cooked shredded chicken", "section": "refrigerated" },
+      { "item": "Kevin's pre-cooked chicken", "section": "refrigerated" },
       { "item": "Flour tortillas", "section": "pantry" },
       { "item": "Salsa verde (jarred)", "section": "pantry" },
       { "item": "Sour cream", "section": "refrigerated" },
@@ -154,7 +154,7 @@
     ],
     "shopping_items": [
       { "item": "Ground beef", "section": "refrigerated" },
-      { "item": "Corn or flour tortillas", "section": "pantry" },
+      { "item": "Flour tortillas", "section": "pantry" },
       { "item": "Shredded cheese", "section": "refrigerated" },
       { "item": "Sour cream", "section": "refrigerated" },
       { "item": "Salsa", "section": "pantry" }
@@ -338,7 +338,7 @@
     "shopping_items": [
       { "item": "Ground beef", "section": "refrigerated" },
       { "item": "Couscous", "section": "pantry" },
-      { "item": "Crumbled feta (optional)", "section": "refrigerated" },
+      { "item": "Crumbled feta", "section": "refrigerated" },
       { "item": "Lemon", "section": "produce" }
     ]
   },
@@ -447,8 +447,8 @@
     ],
     "shopping_items": [
       { "item": "Yukon gold potatoes", "section": "produce" },
-      { "item": "Vegetable or chicken broth", "section": "pantry" },
-      { "item": "Sour cream or cream cheese", "section": "refrigerated" },
+      { "item": "Vegetable broth", "section": "pantry" },
+      { "item": "Sour cream", "section": "refrigerated" },
       { "item": "Shredded cheese", "section": "refrigerated" }
     ]
   },
@@ -584,9 +584,9 @@
     "shopping_items": [
       { "item": "Frozen corn (one bag)", "section": "frozen" },
       { "item": "Potatoes", "section": "produce" },
-      { "item": "Vegetable or chicken broth", "section": "pantry" },
+      { "item": "Vegetable broth", "section": "pantry" },
       { "item": "Cream cheese", "section": "refrigerated" },
-      { "item": "Shredded cheddar", "section": "refrigerated" }
+      { "item": "Shredded cheese", "section": "refrigerated" }
     ]
   },
   {

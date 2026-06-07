@@ -856,7 +856,7 @@ function renderPlan() {
     wrap.appendChild(el("div", { style: { height: "1px", background: C.border, margin: "20px 0" } }));
 
     var ticked = plan.ticked_items || [];
-    var bySection = buildShoppingList(plan.meal_pool, plan.servings || {});
+    var bySection = buildShoppingList(plan.meal_pool);
     var hasAny = SECTIONS.some(function(s) { return bySection[s.key] && bySection[s.key].length; });
     var totalItems = SECTIONS.reduce(function(n, s) { return n + (bySection[s.key] ? bySection[s.key].length : 0); }, 0);
     var tickedCount = ticked.length;
@@ -955,7 +955,7 @@ var SECTIONS = [
   { key: "pantry",       label: "Pantry",        emoji: "🥫" },
 ];
 
-function buildShoppingList(mealIds, servings) {
+function buildShoppingList(mealIds) {
   var seen = {};
   var bySection = {};
   SECTIONS.forEach(function(s) { bySection[s.key] = []; });
@@ -963,14 +963,13 @@ function buildShoppingList(mealIds, servings) {
   mealIds.forEach(function(id) {
     var meal = getMealById(id);
     if (!meal) return;
-    var qty = (servings && servings[id]) || 1;
     var items = meal.shopping_items || (meal.shopping_item ? [{ item: meal.shopping_item, section: "pantry" }] : []);
     items.forEach(function(si) {
       if (!seen[si.item]) {
         seen[si.item] = true;
         var sec = si.section || "pantry";
         if (!bySection[sec]) bySection[sec] = [];
-        bySection[sec].push(qty > 1 ? si.item + " ×" + qty : si.item);
+        bySection[sec].push(si.item);
       }
     });
   });
